@@ -9,8 +9,13 @@ export default async function LoginPage() {
     redirect("/");
   }
   return (
-    <main>
-      <h2>Sign in</h2>
+    <main className="flex flex-col items-center justify-center h-screen gap-7">
+      <div className="text-center">
+        <h1 className="text-3xl font-bold uppercase text-indigo">
+          Apps Manager
+        </h1>
+        <h2 className="text-xl font-semibold">Sign In</h2>
+      </div>
       <Form />
     </main>
   );

@@ -7,7 +7,6 @@ const Header = () => {
   const signOut_ = () => {
     signOut({
       callbackUrl: window.location.origin,
-      redirect: true,
     });
   };
   return (

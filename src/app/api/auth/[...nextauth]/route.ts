@@ -3,6 +3,7 @@ import { compare } from "bcrypt";
 import NextAuth, { Session, type NextAuthOptions } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 export const authOptions: NextAuthOptions = {
@@ -27,13 +28,14 @@ export const authOptions: NextAuthOptions = {
         const user = await prisma.user.findUnique({
           where: { username: credentials.username },
         });
-        if (!user) return null;
+        if (!user) throw new Error(JSON.stringify({ type: "Username" }));
 
         const checkPassword = await compare(
           credentials.password,
           user.password
         );
-        if (!checkPassword) return null;
+        if (!checkPassword)
+          throw new Error(JSON.stringify({ type: "Password" }));
         return user;
       },
     }),
