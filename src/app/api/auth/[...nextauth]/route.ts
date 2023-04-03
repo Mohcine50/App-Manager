@@ -1,21 +1,26 @@
 import { PrismaClient } from "@prisma/client";
 import { compare } from "bcrypt";
-import NextAuth, { type NextAuthOptions } from "next-auth";
+import NextAuth, { Session, type NextAuthOptions } from "next-auth";
+import { JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { env } from "process";
 
 const prisma = new PrismaClient();
 export const authOptions: NextAuthOptions = {
+  pages: {
+    signIn: "/login",
+  },
   session: {
     strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60,
+    updateAge: 24 * 60 * 60,
   },
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
       name: "CredentialsProvider",
       credentials: {
-        username: { label: "Username", type: "text" },
-        password: { label: "Password", type: "password" },
+        username: { label: "username", type: "text" },
+        password: { label: "password", type: "password" },
       },
       async authorize(credentials, req) {
         if (!credentials?.username || !credentials.password) return null;
@@ -33,6 +38,15 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  callbacks: {
+    async session({ session, token }: { session: Session; token: JWT }) {
+      session.user = token;
+      return session;
+    },
+    async jwt({ token, user }) {
+      return { ...token, ...user };
+    },
+  },
 };
 
 const handler = NextAuth(authOptions);

@@ -11,7 +11,7 @@ const Form = () => {
     signIn("credentials", {
       username,
       password,
-      callbackUrl: "/admin",
+      callbackUrl: window.location.origin,
       redirect: true,
     });
   };
