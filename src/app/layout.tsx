@@ -1,12 +1,13 @@
 import "./globals.css";
 import Providers from "./providers";
-import { Poppins } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
+import SideBar from "./components/sideBar";
 
 export const metadata = {
   title: "App Manager",
   description: "Apps and consoles Manager",
 };
-const poppins = Poppins({
+const inter = Inter({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
 });
@@ -18,8 +19,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={poppins.className}>
-        <Providers>{children}</Providers>
+      <body className={`${inter.className} flex`}>
+        <Providers>
+          <SideBar />
+          <div className="bg-[#F5F5F5] w-[100%]">{children}</div>
+        </Providers>
       </body>
     </html>
   );
