@@ -4,6 +4,7 @@ import {
   faDashboard,
   faFileCode,
   faLaptop,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import React from "react";
@@ -32,6 +33,10 @@ const SideBar = () => {
         <NavLink href="/apps">
           <FontAwesomeIcon icon={faLaptop} style={{ fontSize: 18 }} />
           <span>Apps</span>
+        </NavLink>
+        <NavLink href="/profile">
+          <FontAwesomeIcon icon={faUser} style={{ fontSize: 18 }} />
+          <span>Profile</span>
         </NavLink>
       </div>
     </div>
