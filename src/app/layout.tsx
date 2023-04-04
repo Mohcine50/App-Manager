@@ -7,7 +7,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 
 export const metadata = {
-  title: "App Manager",
+  title: "Apps Manager | Dashboard",
   description: "Apps and consoles Manager",
 };
 const inter = Inter({

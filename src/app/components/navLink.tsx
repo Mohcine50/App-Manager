@@ -13,7 +13,7 @@ const NavLink = ({ href, children }: Props) => {
   const class_ = "bg-[#4256D0] rounded-xl text-white";
   return (
     <Link
-      className={`font-normal text-[16px] p-1.5 flex items-center gap-3 ${
+      className={`font-normal text-[16px] p-1.5 flex items-center gap-3 transition-all ease-out duration-500 ${
         pathname == href ? class_ : "text-[#9FA6B2]"
       }`}
       href={href}
