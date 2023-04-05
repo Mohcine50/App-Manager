@@ -12,7 +12,8 @@ export const metadata = {
 };
 const inter = Inter({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  style: ["normal"],
 });
 
 export default async function RootLayout({
@@ -35,7 +36,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${inter.className} flex`}>
         <Providers>
-          <SideBar />
+          <SideBar session={session} />
           <div className="bg-[#F5F5F5] w-[100%]">
             <Header />
             {children}

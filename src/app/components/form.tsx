@@ -20,7 +20,8 @@ const Form = () => {
       redirect: false,
     });
     if (signin?.error === null) {
-      router.replace("/");
+      router.refresh();
+      //router.replace("/");
     } else {
       setStatus(undefined);
       const credentialsError = JSON.parse(signin?.error as string);

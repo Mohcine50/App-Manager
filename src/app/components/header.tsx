@@ -8,20 +8,12 @@ const Header = () => {
   const title = path.split("/");
 
   return (
-    <div className="bg-white p-4 flex justify-between items-center">
-      <h1 className="text-gray-500">
+    <div className="flex items-center justify-between p-5 bg-white">
+      <h1 className="text-xl text-gray-500">
         {title[1] === ""
           ? "Dashboard"
           : title[1].charAt(0).toUpperCase() + title[1].substring(1)}
       </h1>
-      <button
-        className="bg-indigo hover:bg-blue-700 text-white font-semibold py-2 px-5 rounded-full"
-        onClick={() => {
-          signOut({ callbackUrl: "/" });
-        }}
-      >
-        Sign out
-      </button>
     </div>
   );
 };
