@@ -8,7 +8,7 @@ const Header = () => {
   const title = path.split("/");
 
   return (
-    <div className="flex items-center justify-between p-5 bg-white">
+    <div className="static flex items-center justify-between p-5 bg-white ">
       <h1 className="text-xl text-gray-500">
         {title[1] === ""
           ? "Dashboard"

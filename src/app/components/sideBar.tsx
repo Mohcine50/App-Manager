@@ -16,7 +16,7 @@ import { Session } from "next-auth";
 
 const SideBar = ({ session }: { session: Session }) => {
   return (
-    <div className="bg-[#0E1B6B] text-white relative max-h-screen h-screen w-72 overflow-hidden">
+    <div className="bg-[#0E1B6B] text-white relative max-h-screen h-screen w-72 overflow-hidden fixed">
       <Image
         src={require("/static/images/patternHex.png")}
         alt=""
