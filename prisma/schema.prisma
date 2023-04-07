@@ -18,16 +18,17 @@ model User {
 }
 
 model Console {
-  id          Int    @id @default(autoincrement())
-  name        String @unique
-  email       String @unique
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  email       String   @unique
   password    String
-  phoneNumber String @unique
+  phoneNumber String   @unique
   country     String
-  User        User   @relation(fields: [userId], references: [id])
+  User        User     @relation(fields: [userId], references: [id])
   userId      String
   apps        App[]
-  status      STATUS @default(Live)
+  status      STATUS   @default(Live)
+  createdAt   DateTime @default(now())
 }
 
 enum STATUS {
@@ -36,10 +37,11 @@ enum STATUS {
 }
 
 model App {
-  id          Int     @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   name        String
-  packageName String  @unique
-  Console     Console @relation(fields: [consoleId], references: [id])
+  packageName String   @unique
+  Console     Console  @relation(fields: [consoleId], references: [id])
   consoleId   Int
-  status      STATUS  @default(Live)
+  status      STATUS   @default(Live)
+  createdAt   DateTime @default(now())
 }

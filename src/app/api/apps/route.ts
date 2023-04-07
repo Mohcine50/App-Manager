@@ -3,6 +3,14 @@ import { NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 export async function GET(req: Request) {
-  const data = await prisma.app.count();
-  return NextResponse.json({ data });
+	const apps = await prisma.app.findMany({
+		include: {
+			Console: {
+				select: {
+					name: true,
+				},
+			},
+		},
+	});
+	return NextResponse.json({ apps });
 }

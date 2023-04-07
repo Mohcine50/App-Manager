@@ -1,25 +1,33 @@
+"use client";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { STATUS } from "../../../types/types.d";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 import type { App, Console } from "@prisma/client";
+import { deleteApp } from "../../../utils";
 
 interface IProps {
-	consoles: IConsole[];
+	apps: IApp[];
 }
-interface IConsole extends Console {
-	apps: App[];
+interface IApp extends App {
+	Console: Console;
 }
-const ConsolesTable = ({ consoles }: IProps) => {
+const AppsTable = ({ apps }: IProps) => {
 	const tHead: string[] = [
 		"Name",
-		"Apps",
+		"packageName",
+		"Installs",
 		"Created At",
-		"Country",
+		"Console",
 		"Status",
 		"Action",
 	];
 
+	const delete_app = async (id: number) => {
+		const delete_ = await deleteApp(id);
+		console.log(delete_);
+	};
 	return (
 		<table className="table-auto w-[100%]">
 			<thead>
@@ -37,30 +45,33 @@ const ConsolesTable = ({ consoles }: IProps) => {
 				</tr>
 			</thead>
 			<tbody>
-				{consoles.map((console: IConsole, idx) => {
+				{apps.map((app: IApp, idx) => {
 					return (
 						<tr key={idx} className="h-12 border-b border-gray-200">
 							<td className="text-center">
-								<span>{console.name}</span>
+								<span>{app.name}</span>
 							</td>
 							<td className="text-center">
-								<span>{console.apps.length}</span>
+								<span>{app.packageName}</span>
 							</td>
 							<td className="text-center">
-								<span>{`${console.createdAt}`}</span>
+								<span>0</span>
 							</td>
 							<td className="text-center">
-								<span>{console.country}</span>
+								<span>{`${app.createdAt}`}</span>
+							</td>
+							<td className="text-center">
+								<span>{app.Console.name}</span>
 							</td>
 							<td className="text-center">
 								<span
 									className={`font-medium py-2 px-4 rounded-full ${
-										console.status === STATUS.Live
+										app.status === STATUS.Live
 											? "bg-green-100 text-green-800"
 											: "bg-orange-100 text-orange-800"
 									}`}
 								>
-									{console.status}
+									{app.status}
 								</span>
 							</td>
 							<td className="align-middle">
@@ -69,7 +80,12 @@ const ConsolesTable = ({ consoles }: IProps) => {
 										<FontAwesomeIcon icon={faEdit} />
 										<span>Edit</span>
 									</button>
-									<button className="flex items-center gap-1 px-2 py-1 text-white bg-red-600 rounded-md outline-none h-9">
+									<button
+										className="flex items-center gap-1 px-2 py-1 text-white bg-red-600 rounded-md outline-none h-9"
+										onClick={() => {
+											delete_app(app.id);
+										}}
+									>
 										<FontAwesomeIcon icon={faTrash} />
 										<span>Delete</span>
 									</button>
@@ -83,4 +99,4 @@ const ConsolesTable = ({ consoles }: IProps) => {
 	);
 };
 
-export default ConsolesTable;
+export default AppsTable;
