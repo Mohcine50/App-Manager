@@ -3,10 +3,8 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import ConsolesTable from "../components/consolesTable";
-import { fetchConsoles } from "../../../utils";
 import { Suspense } from "react";
-import ConsoleTable from "../components/consoleTable";
+import ConsoleTable from "./consoleTable";
 
 export const metadata = {
 	title: "Apps Manager | Consoles",

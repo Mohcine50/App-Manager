@@ -21,7 +21,7 @@ const ConsolesTable = ({ consoles }: IProps) => {
 	];
 
 	return (
-		<table className="table-auto w-[100%]">
+		<table className="table-auto w-[100%] mx-auto">
 			<thead>
 				<tr>
 					{tHead.map((title, idx) => {

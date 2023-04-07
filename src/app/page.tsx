@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { fetchApps, fetchConsoles } from "../../utils";
+import { Suspense } from "react";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import Card from "./components/dashCard";
 import Chart from "./components/dashChart";
@@ -11,16 +11,25 @@ export default async function Home() {
 		redirect("/login");
 	}
 
-	const consoles = await fetchConsoles();
-	const apps = await fetchApps();
-
 	return (
 		<main className="p-6">
 			<div className="flex items-center justify-evenly ">
-				<Card title="Consoles" count={consoles.length} />
-				<Card title="Apps" count={apps.length} />
-				<Card title="Users" count={1220} />
-				<Card title="Installs" count={1992} />
+				<Suspense fallback={<h1>Loading...</h1>}>
+					{/* @ts-expect-error Server Component */}
+					<Card title="Consoles" />
+				</Suspense>
+				<Suspense fallback={<h1>Loading...</h1>}>
+					{/* @ts-expect-error Server Component */}
+					<Card title="Apps" />
+				</Suspense>
+				<Suspense fallback={<h1>Loading...</h1>}>
+					{/* @ts-expect-error Server Component */}
+					<Card title="Users" />
+				</Suspense>
+				<Suspense fallback={<h1>Loading...</h1>}>
+					{/* @ts-expect-error Server Component */}
+					<Card title="Installs" />
+				</Suspense>
 			</div>
 			<div className="flex gap-2 m-6">
 				<Chart title="Downloads" />
