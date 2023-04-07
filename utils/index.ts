@@ -9,12 +9,20 @@ export const fetchConsoles = async () => {
 	const data = await res.json();
 	return data.consoles;
 };
+/**
+ *
+ * @returns apps
+ */
 export const fetchApps = async () => {
 	const res = await fetch(`${BASE_URL}/api/apps`);
 	const data = await res.json();
 	return data.apps;
 };
-
+/**
+ * Delete App
+ * @param id id of app
+ * @returns deleted app
+ */
 export const deleteApp = async (id: number) => {
 	const res = await fetch(`/api/apps/${id}`, {
 		method: "DELETE",

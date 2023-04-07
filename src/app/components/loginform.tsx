@@ -1,38 +1,51 @@
 "use client";
-import { signIn, useSession } from "next-auth/react";
-import React, { useEffect, useState } from "react";
+import { signIn } from "next-auth/react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useFormik } from "formik";
+import { loginFormSchema } from "../../../utils/schemas";
 
-const Form = () => {
-	const [username, setUsername] = useState<string>("");
-	const [password, setPassword] = useState<string>("");
+const LoginForm = () => {
 	const [errorPassword, setErrorPassword] = useState<string>();
 	const [errorUsername, setErrorUsername] = useState<string>();
 	const router = useRouter();
 	const [status, setStatus] = useState<string>();
 
+	const formik = useFormik({
+		initialValues: {
+			username: "",
+			password: "",
+		},
+		onSubmit: async (values) => {
+			setStatus("loading");
+			const username = values.username;
+			const password = values.password;
+			const signin = await signIn("credentials", {
+				username,
+				password,
+				redirect: false,
+			});
+			if (signin?.error === null) {
+				router.refresh();
+				//router.replace("/");
+			} else {
+				setStatus(undefined);
+				const credentialsError = JSON.parse(signin?.error as string);
+				if (credentialsError.type === "Password") {
+					setErrorUsername(undefined);
+					setErrorPassword("Worong Password");
+				} else {
+					setErrorUsername("Wrong Username");
+				}
+			}
+		},
+		validationSchema: loginFormSchema,
+	});
+	console.log(formik);
+
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		setStatus("loading");
-
-		const signin = await signIn("credentials", {
-			username,
-			password,
-			redirect: false,
-		});
-		if (signin?.error === null) {
-			router.refresh();
-			//router.replace("/");
-		} else {
-			setStatus(undefined);
-			const credentialsError = JSON.parse(signin?.error as string);
-			if (credentialsError.type === "Password") {
-				setErrorUsername(undefined);
-				setErrorPassword("Worong Password");
-			} else {
-				setErrorUsername("Wrong Username");
-			}
-		}
+		formik.handleSubmit();
 	};
 
 	return (
@@ -48,8 +61,8 @@ const Form = () => {
 					placeholder="Username"
 					name="username"
 					id="username"
-					value={username}
-					onChange={(e) => setUsername(e.target.value)}
+					value={formik.values.username}
+					onChange={formik.handleChange}
 				/>
 				{errorUsername !== undefined ? (
 					<div className="font-bold text-[#ff0033] text-sm ml-2">
@@ -63,8 +76,8 @@ const Form = () => {
 					placeholder="Password"
 					id="password"
 					name="password"
-					value={password}
-					onChange={(e) => setPassword(e.target.value)}
+					value={formik.values.password}
+					onChange={formik.handleChange}
 				/>
 				{errorPassword !== undefined ? (
 					<div className="font-bold text-[#ff0033] text-sm ml-2">
@@ -103,4 +116,4 @@ const Form = () => {
 	);
 };
 
-export default Form;
+export default LoginForm;

@@ -5,6 +5,8 @@ import { authOptions } from "../api/auth/[...nextauth]/route";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import ConsolesTable from "../components/consolesTable";
 import { fetchConsoles } from "../../../utils";
+import { Suspense } from "react";
+import ConsoleTable from "../components/consoleTable";
 
 export const metadata = {
 	title: "Apps Manager | Consoles",
@@ -16,8 +18,6 @@ export default async function ConsolePage() {
 	if (!session) {
 		redirect("/login");
 	}
-
-	const consoles = await fetchConsoles();
 
 	return (
 		<main className="p-5">
@@ -44,9 +44,10 @@ export default async function ConsolePage() {
 					Add a Console
 				</button>
 			</div>
-			<div className="p-5 mt-5 bg-white rounded-lg">
-				<ConsolesTable consoles={consoles} />
-			</div>
+			<Suspense fallback={<h1>Load consoles...</h1>}>
+				{/* @ts-expect-error Server Component */}
+				<ConsoleTable />
+			</Suspense>
 		</main>
 	);
 }

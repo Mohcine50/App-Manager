@@ -7,7 +7,7 @@ import { authOptions } from "../api/auth/[...nextauth]/route";
 import AppsTable from "../components/appsTable";
 
 export const metadata = {
-	title: "Apps Manager| My Apps",
+	title: "Apps Manager | My Apps",
 	description: "Apps and consoles Manager",
 };
 
