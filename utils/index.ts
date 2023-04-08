@@ -30,3 +30,10 @@ export const deleteApp = async (id: number) => {
 	const data = await res.json();
 	return data;
 };
+export const deleteConsole = async (id: number) => {
+	const res = await fetch(`/api/console/${id}`, {
+		method: "DELETE",
+	});
+	const data = await res.json();
+	return data;
+};

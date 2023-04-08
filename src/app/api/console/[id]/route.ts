@@ -19,3 +19,29 @@ export async function GET(
 		response.status(401).json({ message: "No console found" });
 	}
 }
+
+export async function DELETE(
+	request: NextApiRequest,
+	{ params }: { params: any }
+) {
+	const { id } = params;
+
+	const console = await prisma.console.findUnique({
+		where: {
+			id: parseInt(id),
+		},
+	});
+
+	if (!console) {
+		throw new Response(JSON.stringify({ message: "console not found" }), {
+			status: 204,
+		});
+	}
+	const deleted = await prisma.console.delete({
+		where: { id: parseInt(id) },
+	});
+
+	return new Response(JSON.stringify({ message: "delete Success" }), {
+		status: 202,
+	});
+}

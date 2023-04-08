@@ -3,18 +3,22 @@ import { usePathname } from "next/navigation";
 import React from "react";
 
 const Header = () => {
-  const path = usePathname();
-  const title = path.split("/");
+	const path = usePathname();
+	const title = path.split("/");
 
-  return (
-    <div className="static flex items-center justify-between p-5 bg-white ">
-      <h1 className="text-xl text-gray-500">
-        {title[1] === ""
-          ? "Dashboard"
-          : title[1].charAt(0).toUpperCase() + title[1].substring(1)}
-      </h1>
-    </div>
-  );
+	return (
+		<div className="static flex items-center justify-between p-5 bg-white ">
+			<h1 className="text-xl text-gray-500">
+				{title[1] === ""
+					? "Dashboard"
+					: title[1].charAt(0).toUpperCase() +
+					  title[1].substring(1)}{" "}
+				<span className="capitalize">
+					{title[2] && " > " + title[2].replace("-", " ")}
+				</span>
+			</h1>
+		</div>
+	);
 };
 
 export default Header;

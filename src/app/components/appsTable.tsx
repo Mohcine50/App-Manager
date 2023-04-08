@@ -48,7 +48,14 @@ const AppsTable = ({ apps }: IProps) => {
 			</thead>
 			{apps.length === 0 ? (
 				<tbody>
-					<td>No APPS Availabe</td>
+					<tr>
+						<td
+							colSpan={100}
+							className="text-center text-gray-300 font-medium"
+						>
+							<span>No apps Found</span>
+						</td>
+					</tr>
 				</tbody>
 			) : (
 				<tbody>

@@ -4,7 +4,8 @@ import React from "react";
 import { STATUS } from "../../../types/types.d";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 import type { App, Console } from "@prisma/client";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { deleteConsole } from "../../../utils";
 
 interface IProps {
 	consoles: IConsole[];
@@ -21,6 +22,11 @@ const ConsolesTable = ({ consoles }: IProps) => {
 		"Status",
 		"Action",
 	];
+	const router = useRouter();
+	const delete_console = async (id: number) => {
+		const delete_ = await deleteConsole(id);
+		router.refresh();
+	};
 
 	return (
 		<table className="table-auto w-[100%] mx-auto">
@@ -71,7 +77,12 @@ const ConsolesTable = ({ consoles }: IProps) => {
 										<FontAwesomeIcon icon={faEdit} />
 										<span>Edit</span>
 									</button>
-									<button className="flex items-center gap-1 px-2 py-1 text-white bg-red-600 rounded-md outline-none h-9">
+									<button
+										className="flex items-center gap-1 px-2 py-1 text-white bg-red-600 rounded-md outline-none h-9"
+										onClick={() => {
+											delete_console(console.id);
+										}}
+									>
 										<FontAwesomeIcon icon={faTrash} />
 										<span>Delete</span>
 									</button>
