@@ -1,8 +1,10 @@
+"use client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { STATUS } from "../../../types/types.d";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 import type { App, Console } from "@prisma/client";
+import { useSearchParams } from "next/navigation";
 
 interface IProps {
 	consoles: IConsole[];
