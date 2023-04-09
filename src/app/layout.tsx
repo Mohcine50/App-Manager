@@ -37,7 +37,7 @@ export default async function RootLayout({
 			<body className={`${inter.className} flex`}>
 				<Providers>
 					<SideBar session={session} />
-					<div className="bg-[#F5F5F5] w-[100%] max-h-screen overflow-scroll">
+					<div className="bg-[#F5F5F5] w-[100%] max-h-screen overflow-scroll flex flex-col">
 						<Header />
 						{children}
 					</div>

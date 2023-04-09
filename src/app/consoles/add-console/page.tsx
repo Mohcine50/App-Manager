@@ -1,5 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import ConsoleForm from "@/app/components/consoleForm";
+import ConsoleForm from "../consoleForm";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
@@ -15,9 +15,10 @@ export default async function ConsolePage() {
 	}
 
 	return (
-		<main className="p-5">
-			<h1>Add Console</h1>
-			<ConsoleForm />
+		<main className="p-5 grow">
+			<div className="h-full p-2 bg-white rounded-xl drop-shadow-sm">
+				<ConsoleForm />
+			</div>
 		</main>
 	);
 }

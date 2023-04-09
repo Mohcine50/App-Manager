@@ -3,8 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import React, { useCallback, useEffect, useRef } from "react";
 import { useFormik } from "formik";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
 
 const SearchForm = () => {
 	const formik = useFormik({
@@ -41,15 +39,6 @@ const SearchForm = () => {
 					/>
 				</label>
 			</form>
-			<Link
-				href="/consoles/add-console"
-				className="px-4 py-3 font-normal text-white rounded-md bg-indigo"
-			>
-				Add a console
-				{/* <button className="px-4 py-3 font-normal text-white rounded-md bg-indigo">
-					Add a Console
-				</button> */}
-			</Link>
 		</div>
 	);
 };
