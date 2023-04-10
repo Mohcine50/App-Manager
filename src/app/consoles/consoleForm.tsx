@@ -1,16 +1,18 @@
 "use client";
+import { useFormik } from "formik";
+import { redirect } from "next/dist/server/api-utils";
+import { useRouter } from "next/navigation";
 import React from "react";
+import { addConsole } from "../../../utils";
 
 interface IProps {
-	name: string;
-	email: string;
-	password: string;
-	country: string;
-	phone: string;
-	operator: string;
-	status: string;
-	handleSubmit: (e?: React.FormEvent<HTMLFormElement> | undefined) => void;
-	handleChange: (e: React.ChangeEvent<any>) => void;
+	name?: string;
+	email?: string;
+	password?: string;
+	country?: string;
+	phone?: string;
+	operator?: string;
+	status?: string;
 }
 const ConsoleForm = ({
 	name = "",
@@ -20,18 +22,45 @@ const ConsoleForm = ({
 	phone = "",
 	operator = "",
 	status = "",
-	handleSubmit,
-	handleChange,
 }: IProps) => {
+	const router = useRouter();
+	const formik = useFormik({
+		initialValues: {
+			name: "",
+			email: "",
+			password: "",
+			country: "",
+			phone: "",
+			operator: "",
+			status: "",
+		},
+		onSubmit: async (values) => {
+			const status = await addConsole({
+				name: values.name,
+				email: values.email,
+				password: values.password,
+				country: values.country,
+				phoneNumber: values.phone,
+				status: values.status,
+			});
+			if (status === 200) {
+				router.replace("/consoles");
+			}
+		},
+	});
+
 	return (
-		<form className="flex flex-col gap-3 px-2" onSubmit={handleSubmit}>
+		<form
+			className="flex flex-col gap-3 px-2"
+			onSubmit={formik.handleSubmit}
+		>
 			<div className="flex gap-5">
 				<div className="flex flex-col flex-grow gap-2">
 					<label htmlFor="name" className="px-2">
 						Name
 					</label>
 					<input
-						onChange={handleChange}
+						onChange={formik.handleChange}
 						type="text"
 						id="name"
 						placeholder="Account Name"
@@ -43,7 +72,7 @@ const ConsoleForm = ({
 						E-mail
 					</label>
 					<input
-						onChange={handleChange}
+						onChange={formik.handleChange}
 						type="text"
 						id="email"
 						placeholder="Account Email"
@@ -57,7 +86,7 @@ const ConsoleForm = ({
 						Password
 					</label>
 					<input
-						onChange={handleChange}
+						onChange={formik.handleChange}
 						className="h-8 px-4 py-6 rounded-lg outline-none border-[#9FA6B2] border focus:border-input-border active:border-input-border placeholder:text-[#9FA6B2]"
 						type="password"
 						id="password"
@@ -69,7 +98,7 @@ const ConsoleForm = ({
 						Country
 					</label>
 					<CountrySelector
-						onChange={handleChange}
+						onChange={formik.handleChange}
 						id="country"
 						className="h-[50px] pl-3 bg-transparent rounded-lg outline-none border-[#9FA6B2] border focus:border-input-border active:border-input-border flex items-center"
 					/>
@@ -81,11 +110,11 @@ const ConsoleForm = ({
 						Phone Number
 					</label>
 					<input
-						onChange={handleChange}
+						onChange={formik.handleChange}
 						type="tel"
 						id="phone"
 						placeholder="Ex: +911234567890"
-						pattern="/^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/"
+						//pattern="/^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/"
 						className="h-8 px-4 py-6 rounded-lg outline-none border-[#9FA6B2] border focus:border-input-border active:border-input-border placeholder:text-[#9FA6B2]"
 					/>
 				</div>
@@ -94,7 +123,7 @@ const ConsoleForm = ({
 						Phone Operator
 					</label>
 					<select
-						onChange={handleChange}
+						onChange={formik.handleChange}
 						id="operator"
 						className="h-[50px] pl-3 bg-transparent  rounded-lg outline-none border-[#9FA6B2] border focus:border-input-border active:border-input-border placeholder:text-[#9FA6B2]"
 					>
@@ -122,11 +151,12 @@ const ConsoleForm = ({
 						Status
 					</label>
 					<select
-						onChange={handleChange}
+						onChange={formik.handleChange}
 						id="status"
+						name="status"
 						className="h-[50px] pl-3 bg-transparent rounded-lg outline-none border-[#9FA6B2] border focus:border-input-border active:border-input-border placeholder:text-[#9FA6B2]"
 					>
-						<option className="py-2" value="Live" selected>
+						<option className="py-2" value="Live">
 							Live
 						</option>
 						<option className="py-2" value="Deleted">
@@ -135,6 +165,12 @@ const ConsoleForm = ({
 					</select>
 				</div>
 			</div>
+			<button
+				type="submit"
+				className="block px-4 py-3 ml-auto mr-3 font-normal text-white rounded-md my-7 bg-indigo"
+			>
+				Add A console
+			</button>
 		</form>
 	);
 };

@@ -30,6 +30,32 @@ export const deleteApp = async (id: number) => {
 	const data = await res.json();
 	return data;
 };
+
+interface IBody {
+	name: string;
+	email: string;
+	password: string;
+	phoneNumber: string;
+	country: string;
+	status: string;
+}
+export const addConsole = async ({ status = "Live", ...body }: IBody) => {
+	const res = await fetch("/api/console/", {
+		method: "POST",
+		/* headers: {
+			"Content-Type": "application/json",
+		}, */
+		body: JSON.stringify(body),
+	});
+	return res.status;
+};
+
+/**
+ *
+ * @param id id of console
+ * @returns
+ */
+
 export const deleteConsole = async (id: number) => {
 	const res = await fetch(`/api/console/${id}`, {
 		method: "DELETE",
