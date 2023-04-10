@@ -1,23 +1,38 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+"use client";
+import { useFormik } from "formik";
+import React from "react";
 import ConsoleForm from "../consoleForm";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
-
-export const metadata = {
-	title: "Apps Manager | Add Console",
-	description: "Apps and consoles Manager",
-};
 
 export default async function ConsolePage() {
-	const session = await getServerSession(authOptions);
-	if (!session) {
-		redirect("/login");
-	}
-
+	const formik = useFormik({
+		initialValues: {
+			name: "",
+			email: "",
+			password: "",
+			country: "",
+			phone: "",
+			operator: "",
+			status: "",
+		},
+		onSubmit: () => {},
+	});
 	return (
 		<main className="p-5 grow">
 			<div className="h-full p-2 bg-white rounded-xl drop-shadow-sm">
-				<ConsoleForm />
+				<ConsoleForm
+					handleSubmit={formik.handleSubmit}
+					name={formik.values.name}
+					email={formik.values.email}
+					password={formik.values.password}
+					phone={formik.values.phone}
+					operator={formik.values.operator}
+					status={formik.values.status}
+					country={formik.values.country}
+					handleChange={formik.handleChange}
+				/>
+				<button className="block px-4 py-3 ml-auto mr-3 font-normal text-white rounded-md my-7 bg-indigo">
+					Add A console
+				</button>
 			</div>
 		</main>
 	);
