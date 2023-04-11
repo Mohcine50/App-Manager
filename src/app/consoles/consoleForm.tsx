@@ -1,9 +1,8 @@
 "use client";
 import { useFormik } from "formik";
-import { redirect } from "next/dist/server/api-utils";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { addConsole } from "../../../utils";
+import { addConsole, editConsole } from "../../../utils";
 
 interface IProps {
 	name?: string;
@@ -13,6 +12,7 @@ interface IProps {
 	phone?: string;
 	operator?: string;
 	status?: string;
+	actionType: "ADD" | "EDIT";
 }
 const ConsoleForm = ({
 	name = "",
@@ -22,29 +22,44 @@ const ConsoleForm = ({
 	phone = "",
 	operator = "",
 	status = "",
+	actionType,
 }: IProps) => {
 	const router = useRouter();
 	const formik = useFormik({
 		initialValues: {
-			name: "",
-			email: "",
-			password: "",
-			country: "",
-			phone: "",
-			operator: "",
-			status: "",
+			name,
+			email,
+			password,
+			country,
+			phone,
+			operator,
+			status,
 		},
 		onSubmit: async (values) => {
-			const status = await addConsole({
-				name: values.name,
-				email: values.email,
-				password: values.password,
-				country: values.country,
-				phoneNumber: values.phone,
-				status: values.status,
-			});
-			if (status === 200) {
-				router.replace("/consoles");
+			if (actionType === "ADD") {
+				const status = await addConsole({
+					name: values.name,
+					email: values.email,
+					password: values.password,
+					country: values.country,
+					phoneNumber: values.phone,
+					status: values.status,
+				});
+				if (status === 200) {
+					router.replace("/consoles");
+				}
+			} else {
+				const status = await editConsole({
+					name: values.name,
+					email: values.email,
+					password: values.password,
+					country: values.country,
+					phoneNumber: values.phone,
+					status: values.status,
+				});
+				if (status === 200) {
+					router.replace("/consoles");
+				}
 			}
 		},
 	});
@@ -133,8 +148,8 @@ const ConsoleForm = ({
 						<option className="py-2" value="IAM">
 							IAM
 						</option>
-						<option className="py-2" value="Orange">
-							Orange
+						<option className="py-2" value="ORANGE">
+							ORANGE
 						</option>
 						<option className="py-2" value="INWI">
 							INWI
@@ -156,7 +171,7 @@ const ConsoleForm = ({
 						name="status"
 						className="h-[50px] pl-3 bg-transparent rounded-lg outline-none border-[#9FA6B2] border focus:border-input-border active:border-input-border placeholder:text-[#9FA6B2]"
 					>
-						<option className="py-2" value="Live">
+						<option className="py-2" value="Live" selected>
 							Live
 						</option>
 						<option className="py-2" value="Deleted">
@@ -346,7 +361,7 @@ const CountrySelector = (props: any) => {
 				Costa Rica
 			</option>
 			<option className="py-2" value="Cote D'ivoire">
-				Cote D'ivoire
+				{"Cote D'ivoire"}
 			</option>
 			<option className="py-2" value="Croatia">
 				Croatia
@@ -535,7 +550,7 @@ const CountrySelector = (props: any) => {
 				className="py-2"
 				value="Korea, Democratic People's Republic of"
 			>
-				Korea, Democratic People's Republic of
+				{"Korea, Democratic People's Republic of"}
 			</option>
 			<option className="py-2" value="Korea, Republic of">
 				Korea, Republic of
@@ -547,7 +562,7 @@ const CountrySelector = (props: any) => {
 				Kyrgyzstan
 			</option>
 			<option className="py-2" value="Lao People's Democratic Republic">
-				Lao People's Democratic Republic
+				{"Lao People's Democratic Republic"}
 			</option>
 			<option className="py-2" value="Latvia">
 				Latvia

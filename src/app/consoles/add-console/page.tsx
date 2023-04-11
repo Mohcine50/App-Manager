@@ -5,7 +5,7 @@ export default function ConsolePage() {
 	return (
 		<main className="p-5 grow">
 			<div className="h-full p-2 bg-white rounded-xl drop-shadow-sm">
-				<ConsoleForm />
+				<ConsoleForm actionType="ADD" />
 			</div>
 		</main>
 	);

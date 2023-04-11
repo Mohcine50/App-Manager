@@ -42,9 +42,16 @@ interface IBody {
 export const addConsole = async ({ status = "Live", ...body }: IBody) => {
 	const res = await fetch("/api/console/", {
 		method: "POST",
-		/* headers: {
-			"Content-Type": "application/json",
-		}, */
+
+		body: JSON.stringify(body),
+	});
+	return res.status;
+};
+
+export const editConsole = async ({ status = "Live", ...body }: IBody) => {
+	const res = await fetch("/api/console/", {
+		method: "PUT",
+
 		body: JSON.stringify(body),
 	});
 	return res.status;
