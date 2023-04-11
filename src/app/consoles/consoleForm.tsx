@@ -44,6 +44,7 @@ const ConsoleForm = ({
 					country: values.country,
 					phoneNumber: values.phone,
 					status: values.status,
+					operator: values.operator,
 				});
 				if (status === 200) {
 					router.replace("/consoles");
@@ -56,6 +57,7 @@ const ConsoleForm = ({
 					country: values.country,
 					phoneNumber: values.phone,
 					status: values.status,
+					operator: values.operator,
 				});
 				if (status === 200) {
 					router.replace("/consoles");
@@ -129,7 +131,6 @@ const ConsoleForm = ({
 						type="tel"
 						id="phone"
 						placeholder="Ex: +911234567890"
-						//pattern="/^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/"
 						className="h-8 px-4 py-6 rounded-lg outline-none border-[#9FA6B2] border focus:border-input-border active:border-input-border placeholder:text-[#9FA6B2]"
 					/>
 				</div>

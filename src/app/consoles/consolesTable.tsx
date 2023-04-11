@@ -6,6 +6,7 @@ import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 import type { App, Console } from "@prisma/client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { deleteConsole } from "../../../utils";
+import Link from "next/link";
 
 interface IProps {
 	consoles: IConsole[];
@@ -23,7 +24,7 @@ const ConsolesTable = ({ consoles }: IProps) => {
 		"Action",
 	];
 	const router = useRouter();
-	const delete_console = async (id: number) => {
+	const delete_console = async (id: string) => {
 		const delete_ = await deleteConsole(id);
 		router.refresh();
 	};
@@ -73,10 +74,18 @@ const ConsolesTable = ({ consoles }: IProps) => {
 							</td>
 							<td className="align-middle">
 								<div className="flex items-center justify-center gap-2">
-									<button className="flex items-center gap-1 px-2 py-1 text-green-500 border-2 border-green-500 rounded-md outline-none h-9">
+									<Link
+										href={{
+											pathname: `/consoles/edit/${console.id}`,
+											query: {
+												test: JSON.stringify(console),
+											},
+										}}
+										className="flex items-center gap-1 px-2 py-1 text-green-500 border-2 border-green-500 rounded-md outline-none h-9"
+									>
 										<FontAwesomeIcon icon={faEdit} />
 										<span>Edit</span>
-									</button>
+									</Link>
 									<button
 										className="flex items-center gap-1 px-2 py-1 text-white bg-red-600 rounded-md outline-none h-9"
 										onClick={() => {

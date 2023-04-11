@@ -3,11 +3,11 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
 export const metadata = {
-	title: "Apps Manager | Edit Console",
+	title: "Apps Manager | Add Console",
 	description: "Apps and consoles Manager",
 };
 
-export default async function EditConsoleLayout({
+export default async function AddConsoleLayout({
 	children,
 }: {
 	children: React.ReactNode;

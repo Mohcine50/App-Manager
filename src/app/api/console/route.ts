@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import { Select } from "@radix-ui/react-select";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
@@ -22,13 +21,27 @@ export const config = {
 export async function POST(req: NextRequest, res: NextApiResponse) {
 	try {
 		const jsonReq = await req.json();
-		const { name, email, password, country, phoneNumber, status } = jsonReq;
+		const {
+			name,
+			email,
+			password,
+			country,
+			phoneNumber,
+			operator,
+			status,
+		} = jsonReq;
 		const token = await getToken({ req });
+		console.log("before consoles");
 		const consoles = await prisma.console.findMany({
 			where: {
-				OR: [{ phoneNumber }, { email }, { name }],
+				OR: [
+					{ phoneNumber: { number: phoneNumber } },
+					{ email },
+					{ name },
+				],
 			},
 		});
+
 		if (consoles.length > 0) {
 			return new Response(
 				JSON.stringify({ message: "Duplicate Console" }),
@@ -37,14 +50,30 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
 				}
 			);
 		}
+
 		const data = await prisma.console.create({
 			data: {
 				name: name,
 				email: email,
 				password: password,
-				phoneNumber: phoneNumber,
 				status: status,
 				country: country,
+				phoneNumber: {
+					connectOrCreate: {
+						where: {
+							number: phoneNumber,
+						},
+						create: {
+							number: phoneNumber,
+							operator,
+							User: {
+								connect: {
+									id: token?.id as string,
+								},
+							},
+						},
+					},
+				},
 				User: {
 					connect: {
 						id: token?.id as string,
@@ -53,6 +82,7 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
 			},
 			include: {
 				User: true,
+				phoneNumber: true,
 			},
 		});
 

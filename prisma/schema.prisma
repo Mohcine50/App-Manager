@@ -20,18 +20,19 @@ model User {
 }
 
 model Console {
-  id            String      @id @unique @default(uuid())
-  name          String      @unique
-  email         String      @unique
+  id            String   @id @unique @default(uuid())
+  name          String   @unique
+  email         String   @unique
   password      String
-  phoneNumber   phoneNumber @relation(fields: [phoneNumberId], references: [id])
   country       String
-  User          User        @relation(fields: [userId], references: [id])
   userId        String
-  apps          App[]
-  status        STATUS      @default(Live)
-  createdAt     DateTime    @default(now())
-  phoneNumberId String      @unique
+  status        STATUS   @default(Live)
+  createdAt     DateTime @default(now())
+  phoneNumberId String   @unique
+
+  phoneNumber phoneNumber @relation(fields: [phoneNumberId], references: [id])
+  User        User        @relation(fields: [userId], references: [id])
+  apps        App[]
 }
 
 model phoneNumber {

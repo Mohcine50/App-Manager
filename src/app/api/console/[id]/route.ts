@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 export async function GET(
 	request: NextApiRequest,
 	response: NextApiResponse,
-	{ params }: { params: { id: number } }
+	{ params }: { params: { id: string } }
 ) {
 	const { id } = params;
 	const console = prisma.console.findUnique({
@@ -28,7 +28,7 @@ export async function DELETE(
 
 	const console = await prisma.console.findUnique({
 		where: {
-			id: parseInt(id),
+			id,
 		},
 	});
 
@@ -38,10 +38,12 @@ export async function DELETE(
 		});
 	}
 	const deleted = await prisma.console.delete({
-		where: { id: parseInt(id) },
+		where: { id },
 	});
 
 	return new Response(JSON.stringify({ message: "delete Success" }), {
 		status: 202,
 	});
 }
+
+export async function PUT(req: NextApiRequest) {}

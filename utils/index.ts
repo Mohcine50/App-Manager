@@ -38,6 +38,7 @@ interface IBody {
 	phoneNumber: string;
 	country: string;
 	status: string;
+	operator: string;
 }
 export const addConsole = async ({ status = "Live", ...body }: IBody) => {
 	const res = await fetch("/api/console/", {
@@ -63,7 +64,7 @@ export const editConsole = async ({ status = "Live", ...body }: IBody) => {
  * @returns
  */
 
-export const deleteConsole = async (id: number) => {
+export const deleteConsole = async (id: string) => {
 	const res = await fetch(`/api/console/${id}`, {
 		method: "DELETE",
 	});
