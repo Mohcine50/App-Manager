@@ -26,7 +26,7 @@ const AppsTable = ({ apps }: IProps) => {
 	];
 
 	const router = useRouter();
-	const delete_app = async (id: number) => {
+	const delete_app = async (id: string) => {
 		const delete_ = await deleteApp(id);
 		router.refresh();
 	};
@@ -51,7 +51,7 @@ const AppsTable = ({ apps }: IProps) => {
 					<tr>
 						<td
 							colSpan={100}
-							className="text-center text-gray-300 font-medium"
+							className="font-medium text-center text-gray-300"
 						>
 							<span>No apps Found</span>
 						</td>

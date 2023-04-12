@@ -1,17 +1,14 @@
 import { PrismaClient } from "@prisma/client";
-import { NextApiRequest } from "next";
+import { NextRequest } from "next/server";
 
 const prisma = new PrismaClient();
 
-export async function GET(
-	request: NextApiRequest,
-	{ params }: { params: any }
-) {
+export async function GET(request: NextRequest, { params }: { params: any }) {
 	const { id } = params;
 
 	const app = await prisma.app.findUnique({
 		where: {
-			id: parseInt(id),
+			id,
 		},
 	});
 
@@ -21,14 +18,14 @@ export async function GET(
 }
 
 export async function DELETE(
-	request: NextApiRequest,
+	request: NextRequest,
 	{ params }: { params: any }
 ) {
 	const { id } = params;
 
 	const app = await prisma.app.findUnique({
 		where: {
-			id: parseInt(id),
+			id,
 		},
 	});
 
@@ -38,7 +35,7 @@ export async function DELETE(
 		});
 	}
 	const deleted = await prisma.app.delete({
-		where: { id: parseInt(id) },
+		where: { id },
 	});
 	console.log(deleted);
 	return new Response(JSON.stringify({ message: "delete Success" }), {

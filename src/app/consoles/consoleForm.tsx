@@ -1,6 +1,6 @@
 "use client";
 import { useFormik } from "formik";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 import { addConsole, editConsole } from "../../../utils";
 
@@ -25,14 +25,16 @@ const ConsoleForm = ({
 	actionType,
 }: IProps) => {
 	const router = useRouter();
+	const { id } = useParams();
+	console.log(id);
 	const formik = useFormik({
 		initialValues: {
-			name,
-			email,
-			password,
-			country,
-			phone,
-			operator,
+			name: name,
+			email: email,
+			password: password,
+			country: country,
+			phone: phone,
+			operator: operator,
 			status,
 		},
 		onSubmit: async (values) => {
@@ -50,15 +52,18 @@ const ConsoleForm = ({
 					router.replace("/consoles");
 				}
 			} else {
-				const status = await editConsole({
-					name: values.name,
-					email: values.email,
-					password: values.password,
-					country: values.country,
-					phoneNumber: values.phone,
-					status: values.status,
-					operator: values.operator,
-				});
+				const status = await editConsole(
+					{
+						name: values.name,
+						email: values.email,
+						password: values.password,
+						country: values.country,
+						phoneNumber: values.phone,
+						status: values.status,
+						operator: values.operator,
+					},
+					id
+				);
 				if (status === 200) {
 					router.replace("/consoles");
 				}
@@ -80,6 +85,7 @@ const ConsoleForm = ({
 						onChange={formik.handleChange}
 						type="text"
 						id="name"
+						value={formik.values.name}
 						placeholder="Account Name"
 						className="h-8 px-4 py-6 rounded-lg outline-none border-[#9FA6B2] border focus:border-input-border active:border-input-border placeholder:text-[#9FA6B2]"
 					/>
@@ -92,6 +98,7 @@ const ConsoleForm = ({
 						onChange={formik.handleChange}
 						type="text"
 						id="email"
+						value={formik.values.email}
 						placeholder="Account Email"
 						className="h-8 px-4 py-6 rounded-lg outline-none border-[#9FA6B2] border focus:border-input-border active:border-input-border placeholder:text-[#9FA6B2]"
 					/>
@@ -107,6 +114,7 @@ const ConsoleForm = ({
 						className="h-8 px-4 py-6 rounded-lg outline-none border-[#9FA6B2] border focus:border-input-border active:border-input-border placeholder:text-[#9FA6B2]"
 						type="password"
 						id="password"
+						value={formik.values.password}
 						placeholder="Account Password"
 					/>
 				</div>
@@ -117,6 +125,7 @@ const ConsoleForm = ({
 					<CountrySelector
 						onChange={formik.handleChange}
 						id="country"
+						value={formik.values.country}
 						className="h-[50px] pl-3 bg-transparent rounded-lg outline-none border-[#9FA6B2] border focus:border-input-border active:border-input-border flex items-center"
 					/>
 				</div>
@@ -130,6 +139,7 @@ const ConsoleForm = ({
 						onChange={formik.handleChange}
 						type="tel"
 						id="phone"
+						value={formik.values.phone}
 						placeholder="Ex: +911234567890"
 						className="h-8 px-4 py-6 rounded-lg outline-none border-[#9FA6B2] border focus:border-input-border active:border-input-border placeholder:text-[#9FA6B2]"
 					/>
@@ -141,6 +151,7 @@ const ConsoleForm = ({
 					<select
 						onChange={formik.handleChange}
 						id="operator"
+						value={formik.values.operator}
 						className="h-[50px] pl-3 bg-transparent  rounded-lg outline-none border-[#9FA6B2] border focus:border-input-border active:border-input-border placeholder:text-[#9FA6B2]"
 					>
 						<option className="py-2" selected disabled>
@@ -170,6 +181,7 @@ const ConsoleForm = ({
 						onChange={formik.handleChange}
 						id="status"
 						name="status"
+						value={formik.values.status}
 						className="h-[50px] pl-3 bg-transparent rounded-lg outline-none border-[#9FA6B2] border focus:border-input-border active:border-input-border placeholder:text-[#9FA6B2]"
 					>
 						<option className="py-2" value="Live" selected>
@@ -185,7 +197,7 @@ const ConsoleForm = ({
 				type="submit"
 				className="block px-4 py-3 ml-auto mr-3 font-normal text-white rounded-md my-7 bg-indigo"
 			>
-				Add A console
+				{actionType === "ADD" ? "Add A console" : "Edit console"}
 			</button>
 		</form>
 	);

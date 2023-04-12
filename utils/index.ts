@@ -23,7 +23,7 @@ export const fetchApps = async () => {
  * @param id id of app
  * @returns deleted app
  */
-export const deleteApp = async (id: number) => {
+export const deleteApp = async (id: string) => {
 	const res = await fetch(`/api/apps/${id}`, {
 		method: "DELETE",
 	});
@@ -40,6 +40,12 @@ interface IBody {
 	status: string;
 	operator: string;
 }
+
+export const getConsole = async (id: string) => {
+	const res = await fetch(`${BASE_URL}/api/console/${id}`);
+	const data = await res.json();
+	return data.console;
+};
 export const addConsole = async ({ status = "Live", ...body }: IBody) => {
 	const res = await fetch("/api/console/", {
 		method: "POST",
@@ -49,10 +55,12 @@ export const addConsole = async ({ status = "Live", ...body }: IBody) => {
 	return res.status;
 };
 
-export const editConsole = async ({ status = "Live", ...body }: IBody) => {
-	const res = await fetch("/api/console/", {
+export const editConsole = async (
+	{ status = "Live", ...body }: IBody,
+	id: string
+) => {
+	const res = await fetch(`/api/console/${id}`, {
 		method: "PUT",
-
 		body: JSON.stringify(body),
 	});
 	return res.status;

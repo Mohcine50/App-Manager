@@ -75,12 +75,7 @@ const ConsolesTable = ({ consoles }: IProps) => {
 							<td className="align-middle">
 								<div className="flex items-center justify-center gap-2">
 									<Link
-										href={{
-											pathname: `/consoles/edit/${console.id}`,
-											query: {
-												test: JSON.stringify(console),
-											},
-										}}
+										href={`/consoles/edit/${console.id}`}
 										className="flex items-center gap-1 px-2 py-1 text-green-500 border-2 border-green-500 rounded-md outline-none h-9"
 									>
 										<FontAwesomeIcon icon={faEdit} />

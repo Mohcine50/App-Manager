@@ -1,44 +1,51 @@
 import { PrismaClient } from "@prisma/client";
-import { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
-export async function GET(
-	request: NextApiRequest,
-	response: NextApiResponse,
-	{ params }: { params: { id: string } }
-) {
-	const { id } = params;
-	const console = prisma.console.findUnique({
-		where: {
-			id,
-		},
-	});
+export async function GET(request: NextRequest, { params }: { params: any }) {
+	try {
+		const { id } = params;
+		const console = await prisma.console.findUnique({
+			where: {
+				id,
+			},
+			include: {
+				phoneNumber: true,
+			},
+		});
 
-	if (!console) {
-		response.status(401).json({ message: "No console found" });
+		if (!console) {
+			return new Response(
+				JSON.stringify({ message: "console not found" }),
+				{
+					status: 204,
+				}
+			);
+		}
+		return new Response(JSON.stringify({ console }), {
+			status: 200,
+		});
+	} catch (error) {
+		return new Response(JSON.stringify({ error }), {
+			status: 400,
+		});
 	}
 }
 
 export async function DELETE(
-	request: NextApiRequest,
+	request: NextRequest,
 	{ params }: { params: any }
 ) {
 	const { id } = params;
 
-	const console = await prisma.console.findUnique({
-		where: {
-			id,
-		},
+	const deletedConsole = await prisma.console.delete({
+		where: { id },
 	});
 
-	if (!console) {
-		throw new Response(JSON.stringify({ message: "console not found" }), {
-			status: 204,
-		});
-	}
-	const deleted = await prisma.console.delete({
-		where: { id },
+	const deletedPhone = await prisma.phoneNumber.delete({
+		where: {
+			id: deletedConsole.phoneNumberId,
+		},
 	});
 
 	return new Response(JSON.stringify({ message: "delete Success" }), {
@@ -46,4 +53,37 @@ export async function DELETE(
 	});
 }
 
-export async function PUT(req: NextApiRequest) {}
+export async function PUT(req: NextRequest, { params }: { params: any }) {
+	const { id } = params;
+	const jsonReq = await req.json();
+
+	const { name, email, password, country, phoneNumber, operator, status } =
+		jsonReq;
+	try {
+		const console = await prisma.console.update({
+			where: {
+				id,
+			},
+			data: {
+				name,
+				email,
+				password,
+				country,
+				phoneNumber: {
+					update: {
+						number: phoneNumber,
+						operator: operator,
+					},
+				},
+				status,
+			},
+		});
+		return new Response(JSON.stringify({ message: "update Success" }), {
+			status: 200,
+		});
+	} catch (error) {
+		return new Response(JSON.stringify({ error }), {
+			status: 400,
+		});
+	}
+}

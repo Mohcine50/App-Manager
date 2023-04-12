@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
 export const metadata = {
-	title: "Apps Manager | Add Console",
+	title: "Apps Manager | Edit Console",
 	description: "Apps and consoles Manager",
 };
 
