@@ -7,6 +7,7 @@ import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 import type { App, Console } from "@prisma/client";
 import { deleteApp } from "../../../utils";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface IProps {
 	apps: IApp[];
@@ -93,10 +94,13 @@ const AppsTable = ({ apps }: IProps) => {
 								</td>
 								<td className="align-middle">
 									<div className="flex items-center justify-center gap-2">
-										<button className="flex items-center gap-1 px-2 py-1 text-green-500 border-2 border-green-500 rounded-md outline-none h-9">
+										<Link
+											href={`/apps/edit/${app.id}`}
+											className="flex items-center gap-1 px-2 py-1 text-green-500 border-2 border-green-500 rounded-md outline-none h-9"
+										>
 											<FontAwesomeIcon icon={faEdit} />
 											<span>Edit</span>
-										</button>
+										</Link>
 										<button
 											className="flex items-center gap-1 px-2 py-1 text-white bg-red-600 rounded-md outline-none h-9"
 											onClick={() => {

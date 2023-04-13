@@ -1,21 +1,21 @@
 version: "3.8"
 services:
-  db:
-    container_name: app-manager
-    image: postgres
-    restart: always
-    environment:
-      POSTGRES_USER: shegami
-      POSTGRES_PASSWORD: shegami1998
-      POSTGRES_DB: appmanager
-    ports:
-      - "5432:5432"
-  pgadmin:
-    container_name: postgadmin
-    image: dpage/pgadmin4
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: Shegami@gmail.com
-      PGADMIN_DEFAULT_PASSWORD: shegami@1998
-    ports:
-      - "5050:80"
+    db:
+        container_name: app-manager-db
+        image: postgres
+        restart: always
+        environment:
+            POSTGRES_USER: shegami
+            POSTGRES_PASSWORD: shegami1998
+            POSTGRES_DB: appmanager
+        ports:
+            - "5432:5432"
+    pgadmin:
+        container_name: postgadmin
+        image: dpage/pgadmin4
+        restart: always
+        environment:
+            PGADMIN_DEFAULT_EMAIL: Shegami@gmail.com
+            PGADMIN_DEFAULT_PASSWORD: shegami@1998
+        ports:
+            - "5050:80"

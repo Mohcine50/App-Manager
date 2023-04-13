@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { fetchApps } from "../../../utils";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import AppsTable from "../components/appsTable";
+import Link from "next/link";
 
 export const metadata = {
 	title: "Apps Manager | My Apps",
@@ -40,9 +41,12 @@ export default async function AppsPage() {
 						/>
 					</label>
 				</form>
-				<button className="px-4 py-3 font-normal text-white rounded-md bg-indigo">
+				<Link
+					href="/apps/add-app"
+					className="px-4 py-3 my-3 font-normal text-white rounded-md bg-indigo"
+				>
 					Add an App
-				</button>
+				</Link>
 			</div>
 			<div className="p-5 mt-5 bg-white rounded-lg">
 				<AppsTable apps={apps} />
