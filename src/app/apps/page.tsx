@@ -23,7 +23,7 @@ export default async function AppsPage() {
 	return (
 		<main className="p-5">
 			<div>
-				<h2 className="text-lg font-bold">Consoles List:</h2>
+				<h2 className="text-lg font-bold">Apps List:</h2>
 				<form className="my-3">
 					<label
 						htmlFor="search"
@@ -43,7 +43,7 @@ export default async function AppsPage() {
 				</form>
 				<Link
 					href="/apps/add-app"
-					className="px-4 py-3 my-3 font-normal text-white rounded-md bg-indigo"
+					className="inline-block px-4 py-3 font-normal text-white rounded-md bg-indigo"
 				>
 					Add an App
 				</Link>

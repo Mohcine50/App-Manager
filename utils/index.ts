@@ -6,7 +6,7 @@ const BASE_URL = process.env.NEXTAUTH_URL;
  */
 export const fetchConsoles = async () => {
 	const res = await fetch(`${BASE_URL}/api/console`, {
-		cache: "no-store",
+		cache: "no-cache",
 	});
 	const data = await res.json();
 	return data.consoles;
@@ -17,14 +17,14 @@ export const fetchConsoles = async () => {
  */
 export const fetchApps = async () => {
 	const res = await fetch(`${BASE_URL}/api/apps`, {
-		cache: "no-store",
+		cache: "no-cache",
 	});
 	const data = await res.json();
 	return data.apps;
 };
 export const getApp = async (id: string) => {
 	const res = await fetch(`${BASE_URL}/api/apps/${id}`, {
-		cache: "no-store",
+		cache: "no-cache",
 	});
 	const data = await res.json();
 	return data;
@@ -76,7 +76,7 @@ interface IConsoleBody {
 
 export const getConsole = async (id: string) => {
 	const res = await fetch(`${BASE_URL}/api/console/${id}`, {
-		cache: "no-store",
+		cache: "no-cache",
 	});
 	const data = await res.json();
 	return data.console;

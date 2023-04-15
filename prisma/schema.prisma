@@ -54,6 +54,63 @@ model App {
   Console     Console  @relation(fields: [consoleId], references: [id])
   User        User     @relation(fields: [userId], references: [id])
   userId      String
+  ads         Ads      @relation(fields: [adsId], references: [id])
+  adsId       String   @unique
+}
+
+model Ads {
+  id          String   @id @unique @default(uuid())
+  hasUnity    Boolean  @default(false)
+  hasAdmob    Boolean  @default(false)
+  hasFan      Boolean  @default(false)
+  hasApplovin Boolean  @default(false)
+  App         App?
+  applovin    Applovin @relation(fields: [applovinId], references: [id])
+  fan         Fan      @relation(fields: [fanId], references: [id])
+  unity       Unity    @relation(fields: [unityId], references: [id])
+  admob       Admob    @relation(fields: [admobId], references: [id])
+  applovinId  String   @unique
+  fanId       String   @unique
+  unityId     String   @unique
+  admobId     String   @unique
+}
+
+model Applovin {
+  id       String @id @unique @default(uuid())
+  rewardId String @unique
+  interId  String @unique
+  bannerId String @unique
+  nativeId String @unique
+  Ads      Ads?
+}
+
+model Admob {
+  id       String @id @unique @default(uuid())
+  appId    String
+  rewardId String @unique
+  interId  String @unique
+  bannerId String @unique
+  nativeId String @unique
+  Ads      Ads?
+}
+
+model Fan {
+  id       String @id @unique @default(uuid())
+  rewardId String @unique
+  interId  String @unique
+  bannerId String @unique
+  nativeId String @unique
+  Ads      Ads?
+}
+
+model Unity {
+  id       String @id @unique @default(uuid())
+  appId    String
+  rewardId String @unique
+  interId  String @unique
+  bannerId String @unique
+  nativeId String @unique
+  Ads      Ads?
 }
 
 ////////////////////////////////////////////
