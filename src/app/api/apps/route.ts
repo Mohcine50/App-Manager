@@ -1,8 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "../../../../utils/prismaClient";
 
-const prisma = new PrismaClient();
 export async function GET(req: Request) {
 	const apps = await prisma.app.findMany({
 		include: {
@@ -33,7 +33,48 @@ export async function POST(req: NextRequest, res: NextResponse) {
 				status: 202,
 			});
 		}
+		const admob = await prisma.admob.create({
+			data: {},
+		});
+		const fan = await prisma.fan.create({
+			data: {},
+		});
+		const applovin = await prisma.applovin.create({
+			data: {},
+		});
+		const unity = await prisma.unity.create({
+			data: {},
+		});
 
+		const ads = await prisma.ads.create({
+			data: {
+				admob: {
+					connect: {
+						id: admob.id,
+					},
+				},
+				unity: {
+					connect: {
+						id: unity.id,
+					},
+				},
+				applovin: {
+					connect: {
+						id: applovin.id,
+					},
+				},
+				fan: {
+					connect: {
+						id: fan.id,
+					},
+				},
+				User: {
+					connect: {
+						id: token?.id as string,
+					},
+				},
+			},
+		});
 		const data = await prisma.app.create({
 			data: {
 				name: name,
@@ -47,6 +88,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
 				Console: {
 					connect: {
 						id: account,
+					},
+				},
+				ads: {
+					connect: {
+						id: ads.id,
 					},
 				},
 			},

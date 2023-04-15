@@ -17,6 +17,7 @@ model User {
   consoles     Console[]
   apps         App[]
   phoneNumbers phoneNumber[]
+  ads          Ads[]
 }
 
 model Console {
@@ -73,43 +74,45 @@ model Ads {
   fanId       String   @unique
   unityId     String   @unique
   admobId     String   @unique
+  User        User     @relation(fields: [userId], references: [id])
+  userId      String
 }
 
 model Applovin {
-  id       String @id @unique @default(uuid())
-  rewardId String @unique
-  interId  String @unique
-  bannerId String @unique
-  nativeId String @unique
+  id       String  @id @unique @default(uuid())
+  rewardId String? @unique
+  interId  String? @unique
+  bannerId String? @unique
+  nativeId String? @unique
   Ads      Ads?
 }
 
 model Admob {
-  id       String @id @unique @default(uuid())
-  appId    String
-  rewardId String @unique
-  interId  String @unique
-  bannerId String @unique
-  nativeId String @unique
+  id       String  @id @unique @default(uuid())
+  appId    String? @unique
+  rewardId String? @unique
+  interId  String? @unique
+  bannerId String? @unique
+  nativeId String? @unique
   Ads      Ads?
 }
 
 model Fan {
-  id       String @id @unique @default(uuid())
-  rewardId String @unique
-  interId  String @unique
-  bannerId String @unique
-  nativeId String @unique
+  id       String  @id @unique @default(uuid())
+  rewardId String? @unique
+  interId  String? @unique
+  bannerId String? @unique
+  nativeId String? @unique
   Ads      Ads?
 }
 
 model Unity {
-  id       String @id @unique @default(uuid())
-  appId    String
-  rewardId String @unique
-  interId  String @unique
-  bannerId String @unique
-  nativeId String @unique
+  id       String  @id @unique @default(uuid())
+  appId    String? @unique
+  rewardId String? @unique
+  interId  String? @unique
+  bannerId String? @unique
+  nativeId String? @unique
   Ads      Ads?
 }
 
