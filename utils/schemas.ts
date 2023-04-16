@@ -9,3 +9,6 @@ export const loginFormSchema = object({
 			"Password can only contain Latin letters."
 		), */
 });
+
+export const appFormSchema = Object({});
+export const consoleFormSchema = Object({});
