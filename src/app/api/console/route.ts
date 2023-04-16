@@ -1,9 +1,8 @@
-import { PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "../../../../utils/prismaClient";
 
-const prisma = new PrismaClient();
 export async function GET(req: Request) {
 	const data = await prisma.console.findMany({
 		include: {

@@ -24,7 +24,6 @@ const AppFrom = ({
 }: IProps) => {
 	const router = useRouter();
 	const { id } = useParams();
-	console.log(id);
 	const formik: any = useFormik({
 		initialValues: {
 			name: name,

@@ -1,7 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { NextRequest } from "next/server";
-
-const prisma = new PrismaClient();
+import { prisma } from "../../../../../utils/prismaClient";
 
 export async function GET(request: NextRequest, { params }: { params: any }) {
 	const { id } = params;
@@ -69,10 +68,26 @@ export async function DELETE(
 			status: 204,
 		});
 	}
-	const deleted = await prisma.app.delete({
+	const deletedApp = await prisma.app.delete({
 		where: { id },
 	});
-	console.log(deleted);
+	const deletedAds = await prisma.ads.delete({
+		where: { id: deletedApp.adsId },
+	});
+
+	const deletedApplovin = await prisma.applovin.delete({
+		where: { id: deletedAds.applovinId },
+	});
+	const deletedUnity = await prisma.unity.delete({
+		where: { id: deletedAds.unityId },
+	});
+	const deletedAdmob = await prisma.admob.delete({
+		where: { id: deletedAds.admobId },
+	});
+	const deletedFan = await prisma.fan.delete({
+		where: { id: deletedAds.fanId },
+	});
+
 	return new Response(JSON.stringify({ message: "delete Success" }), {
 		status: 202,
 	});
