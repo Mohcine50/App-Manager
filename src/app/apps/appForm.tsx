@@ -4,6 +4,15 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import { addApp, editApp } from "../../../utils";
 import { Console } from "../../../types/types";
+import Switch from "../components/switch";
+import AdsIdField from "../components/adsForm";
+
+interface IAdsIds {
+	bannerId?: string;
+	interId?: string;
+	rewardId?: string;
+	nativeId?: string;
+}
 
 interface IProps {
 	name?: string;
@@ -17,6 +26,10 @@ interface IProps {
 	Applovin?: boolean;
 	Unity?: boolean;
 	Fan?: boolean;
+	admobIds?: IAdsIds;
+	applovinIds?: IAdsIds;
+	unityIds?: IAdsIds;
+	fanIds?: IAdsIds;
 }
 const AppFrom = ({
 	name = "",
@@ -29,6 +42,10 @@ const AppFrom = ({
 	Applovin = false,
 	Unity = false,
 	Fan = false,
+	admobIds = {},
+	applovinIds = {},
+	fanIds = {},
+	unityIds = {},
 }: IProps) => {
 	const router = useRouter();
 	const { id } = useParams();
@@ -48,6 +65,10 @@ const AppFrom = ({
 			hasApplovin,
 			hasUnity,
 			hasFan,
+			admobIds,
+			applovinIds,
+			fanIds,
+			unityIds,
 		},
 		onSubmit: async (values) => {
 			if (actionType === "ADD") {
@@ -97,7 +118,7 @@ const AppFrom = ({
 					/>
 				</div>
 				<div className="flex flex-col flex-grow gap-2">
-					<label htmlFor="email" className="px-2">
+					<label htmlFor="packageName" className="px-2">
 						Package Name
 					</label>
 					<input
@@ -180,6 +201,34 @@ const AppFrom = ({
 						onChange={formik.handleChange}
 						checked={formik.values.hasAdmob}
 					/>
+					{hasAdmob && (
+						<div className="transition duration-700 ease-in-out">
+							<AdsIdField
+								onChange={formik.values.onChange}
+								value={formik.values.admobIds.bannerId}
+								inputFor="admob"
+								title="Banner Id"
+							/>
+							<AdsIdField
+								onChange={formik.values.onChange}
+								value={formik.values.admobIds.interId}
+								inputFor="admob"
+								title="Inter Id"
+							/>
+							<AdsIdField
+								onChange={formik.values.onChange}
+								value={formik.values.admobIds.rewardId}
+								inputFor="admob"
+								title="Reward Id"
+							/>
+							<AdsIdField
+								onChange={formik.values.onChange}
+								value={formik.values.admobIds.nativeId}
+								inputFor="admob"
+								title="Native Id"
+							/>
+						</div>
+					)}
 				</div>
 				<div className="">
 					<label htmlFor="unity" className="flex gap-4">
@@ -188,11 +237,39 @@ const AppFrom = ({
 					</label>
 					<input
 						type="checkbox"
-						id="admob"
+						id="unity"
 						className="sr-only"
 						onChange={formik.handleChange}
 						checked={formik.values.hasUnity}
 					/>
+					{hasUnity && (
+						<div className="transition duration-700 ease-in-out">
+							<AdsIdField
+								onChange={formik.values.onChange}
+								value={formik.values.unityIds.bannerId}
+								inputFor="unity"
+								title="Banner Id"
+							/>
+							<AdsIdField
+								onChange={formik.values.onChange}
+								value={formik.values.unityIds.interId}
+								inputFor="unity"
+								title="Inter Id"
+							/>
+							<AdsIdField
+								onChange={formik.values.onChange}
+								value={formik.values.unityIds.rewardId}
+								inputFor="unity"
+								title="Reward Id"
+							/>
+							<AdsIdField
+								onChange={formik.values.onChange}
+								value={formik.values.unityIds.nativeId}
+								inputFor="unity"
+								title="Native Id"
+							/>
+						</div>
+					)}
 				</div>
 				<div className="">
 					<label htmlFor="fan" className="flex gap-4">
@@ -201,11 +278,39 @@ const AppFrom = ({
 					</label>
 					<input
 						type="checkbox"
-						id="admob"
+						id="fan"
 						className="sr-only"
 						onChange={formik.handleChange}
 						checked={formik.values.hasFan}
 					/>
+					{hasFan && (
+						<div className="transition duration-700 ease-in-out">
+							<AdsIdField
+								onChange={formik.values.onChange}
+								value={formik.values.fanIds.bannerId}
+								inputFor="fan"
+								title="Banner Id"
+							/>
+							<AdsIdField
+								onChange={formik.values.onChange}
+								value={formik.values.fanIds.interId}
+								inputFor="fan"
+								title="Inter Id"
+							/>
+							<AdsIdField
+								onChange={formik.values.onChange}
+								value={formik.values.fanIds.rewardId}
+								inputFor="fan"
+								title="Reward Id"
+							/>
+							<AdsIdField
+								onChange={formik.values.onChange}
+								value={formik.values.fanIds.nativeId}
+								inputFor="fan"
+								title="Native Id"
+							/>
+						</div>
+					)}
 				</div>
 				<div className="">
 					<label htmlFor="applovin" className="flex gap-4">
@@ -217,11 +322,39 @@ const AppFrom = ({
 					</label>
 					<input
 						type="checkbox"
-						id="admob"
+						id="applovin"
 						className="sr-only"
 						onChange={formik.handleChange}
 						checked={formik.values.hasApplovin}
 					/>
+					{hasApplovin && (
+						<div className="transition duration-700 ease-in-out">
+							<AdsIdField
+								onChange={formik.values.onChange}
+								value={formik.values.applovinIds.bannerId}
+								inputFor="applovin"
+								title="Banner Id"
+							/>
+							<AdsIdField
+								onChange={formik.values.onChange}
+								value={formik.values.applovinIds.interId}
+								inputFor="applovin"
+								title="Inter Id"
+							/>
+							<AdsIdField
+								onChange={formik.values.onChange}
+								value={formik.values.applovinIds.rewardId}
+								inputFor="applovin"
+								title="Reward Id"
+							/>
+							<AdsIdField
+								onChange={formik.values.onChange}
+								value={formik.values.applovinIds.nativeId}
+								inputFor="applovin"
+								title="Native Id"
+							/>
+						</div>
+					)}
 				</div>
 			</div>
 			<button
@@ -235,26 +368,3 @@ const AppFrom = ({
 };
 
 export default AppFrom;
-
-function Switch({ toggle, setToggle }: { toggle: boolean; setToggle: any }) {
-	const toggleClass = " transform translate-x-5";
-	return (
-		<>
-			<div
-				className="inline-flex items-center w-12 h-6 p-1 bg-gray-400 rounded-full cursor-pointer"
-				onClick={() => {
-					setToggle(!toggle);
-				}}
-			>
-				<div
-					className={
-						`${
-							toggle ? "bg-black" : "bg-indigo"
-						}  h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out` +
-						(toggle ? null : toggleClass)
-					}
-				></div>
-			</div>
-		</>
-	);
-}
