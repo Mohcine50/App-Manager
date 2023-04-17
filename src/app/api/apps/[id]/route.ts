@@ -11,6 +11,14 @@ export async function GET(request: NextRequest, { params }: { params: any }) {
 		},
 		include: {
 			Console: true,
+			ads: {
+				include: {
+					admob: true,
+					applovin: true,
+					unity: true,
+					fan: true,
+				},
+			},
 		},
 	});
 
@@ -23,7 +31,20 @@ export async function PUT(req: NextRequest, { params }: { params: any }) {
 	const { id } = params;
 	const jsonReq = await req.json();
 
-	const { name, packageName, status, account } = jsonReq;
+	const {
+		name,
+		packageName,
+		status,
+		account,
+		hasAdmob,
+		hasApplovin,
+		hasUnity,
+		hasFan,
+		admobIds,
+		applovinIds,
+		unityIds,
+		fanIds,
+	} = jsonReq;
 
 	try {
 		const app = await prisma.app.update({
@@ -35,8 +56,48 @@ export async function PUT(req: NextRequest, { params }: { params: any }) {
 				packageName,
 				status,
 				Console: {
-					connect: {
+					update: {
 						id: account,
+					},
+				},
+				ads: {
+					update: {
+						hasAdmob,
+						hasApplovin,
+						hasFan,
+						hasUnity,
+						admob: {
+							update: {
+								bannerId: admobIds.bannerId,
+								interId: admobIds.interId,
+								nativeId: admobIds.nativeId,
+								rewardId: admobIds.rewardId,
+							},
+						},
+						applovin: {
+							update: {
+								bannerId: applovinIds.bannerId,
+								interId: applovinIds.interId,
+								nativeId: applovinIds.nativeId,
+								rewardId: applovinIds.rewardId,
+							},
+						},
+						fan: {
+							update: {
+								bannerId: fanIds.bannerId,
+								interId: fanIds.interId,
+								nativeId: fanIds.nativeId,
+								rewardId: fanIds.rewardId,
+							},
+						},
+						unity: {
+							update: {
+								bannerId: unityIds.bannerId,
+								interId: unityIds.interId,
+								nativeId: unityIds.nativeId,
+								rewardId: unityIds.rewardId,
+							},
+						},
 					},
 				},
 			},
