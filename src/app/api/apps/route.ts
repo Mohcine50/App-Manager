@@ -19,7 +19,20 @@ export async function GET(req: Request) {
 export async function POST(req: NextRequest, res: NextResponse) {
 	try {
 		const jsonReq = await req.json();
-		const { name, packageName, status, account } = jsonReq;
+		const {
+			name,
+			packageName,
+			status,
+			account,
+			hasAdmob,
+			hasApplovin,
+			hasUnity,
+			hasFan,
+			admobIds,
+			applovinIds,
+			unityIds,
+			fanIds,
+		} = jsonReq;
 		const token = await getToken({ req });
 
 		const apps = await prisma.app.findMany({
@@ -34,20 +47,45 @@ export async function POST(req: NextRequest, res: NextResponse) {
 			});
 		}
 		const admob = await prisma.admob.create({
-			data: {},
+			data: {
+				bannerId: admobIds.bannerId,
+				interId: admobIds.interId,
+				nativeId: admobIds.nativeId,
+				rewardId: admobIds.rewardId,
+				appId: packageName,
+			},
 		});
 		const fan = await prisma.fan.create({
-			data: {},
+			data: {
+				bannerId: fanIds.bannerId,
+				interId: fanIds.interId,
+				nativeId: fanIds.nativeId,
+				rewardId: fanIds.rewardId,
+			},
 		});
 		const applovin = await prisma.applovin.create({
-			data: {},
+			data: {
+				bannerId: applovinIds.bannerId,
+				interId: applovinIds.interId,
+				nativeId: applovinIds.nativeId,
+				rewardId: applovinIds.rewardId,
+			},
 		});
 		const unity = await prisma.unity.create({
-			data: {},
+			data: {
+				bannerId: unityIds.bannerId,
+				interId: unityIds.interId,
+				nativeId: unityIds.nativeId,
+				rewardId: unityIds.rewardId,
+			},
 		});
 
 		const ads = await prisma.ads.create({
 			data: {
+				hasAdmob,
+				hasApplovin,
+				hasFan,
+				hasUnity,
 				admob: {
 					connect: {
 						id: admob.id,

@@ -1,3 +1,5 @@
+import { IAppBody } from "../types/types";
+
 const BASE_URL = process.env.NEXTAUTH_URL;
 
 /**
@@ -42,12 +44,6 @@ export const deleteApp = async (id: string) => {
 	return data;
 };
 
-interface IAppBody {
-	name: string;
-	packageName: string;
-	account: string;
-	status: string;
-}
 export const addApp = async (body: IAppBody) => {
 	const res = await fetch("/api/apps/", {
 		method: "POST",

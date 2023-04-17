@@ -21,3 +21,25 @@ export interface App {
 	console: Console;
 	status: STATUS;
 }
+
+interface IAppBody {
+	name: string;
+	packageName: string;
+	account: string;
+	status: string;
+	admobIds: IAdsIds;
+	applovinIds: IAdsIds;
+	unityIds: IAdsIds;
+	fanIds: IAdsIds;
+	hasAdmob: boolean;
+	hasApplovin: boolean;
+	hasUnity: boolean;
+	hasFan: boolean;
+}
+
+interface IAdsIds {
+	bannerId?: string;
+	interId?: string;
+	rewardId?: string;
+	nativeId?: string;
+}

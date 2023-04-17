@@ -49,7 +49,7 @@ model App {
   id          String   @id @unique @default(uuid())
   name        String
   packageName String   @unique
-  consoleId   String   @unique
+  consoleId   String
   status      STATUS   @default(Live)
   createdAt   DateTime @default(now())
   Console     Console  @relation(fields: [consoleId], references: [id])
@@ -89,7 +89,6 @@ model Applovin {
 
 model Admob {
   id       String  @id @unique @default(uuid())
-  appId    String? @unique
   rewardId String? @unique
   interId  String? @unique
   bannerId String? @unique
@@ -108,7 +107,6 @@ model Fan {
 
 model Unity {
   id       String  @id @unique @default(uuid())
-  appId    String? @unique
   rewardId String? @unique
   interId  String? @unique
   bannerId String? @unique

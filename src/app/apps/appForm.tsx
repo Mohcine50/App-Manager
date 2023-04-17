@@ -3,16 +3,9 @@ import { useFormik } from "formik";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import { addApp, editApp } from "../../../utils";
-import { Console } from "../../../types/types";
+import { Console, IAdsIds } from "../../../types/types";
 import Switch from "../components/switch";
 import AdsIdField from "../components/adsForm";
-
-interface IAdsIds {
-	bannerId?: string;
-	interId?: string;
-	rewardId?: string;
-	nativeId?: string;
-}
 
 interface IProps {
 	name?: string;
@@ -42,10 +35,30 @@ const AppFrom = ({
 	Applovin = false,
 	Unity = false,
 	Fan = false,
-	admobIds = {},
-	applovinIds = {},
-	fanIds = {},
-	unityIds = {},
+	admobIds = {
+		bannerId: "",
+		interId: "",
+		rewardId: "",
+		nativeId: "",
+	},
+	applovinIds = {
+		bannerId: "",
+		interId: "",
+		rewardId: "",
+		nativeId: "",
+	},
+	fanIds = {
+		bannerId: "",
+		interId: "",
+		rewardId: "",
+		nativeId: "",
+	},
+	unityIds = {
+		bannerId: "",
+		interId: "",
+		rewardId: "",
+		nativeId: "",
+	},
 }: IProps) => {
 	const router = useRouter();
 	const { id } = useParams();
@@ -65,18 +78,27 @@ const AppFrom = ({
 			hasApplovin,
 			hasUnity,
 			hasFan,
-			admobIds,
+			admobIds: admobIds,
 			applovinIds,
 			fanIds,
 			unityIds,
 		},
 		onSubmit: async (values) => {
+			console.log(values);
 			if (actionType === "ADD") {
 				const status = await addApp({
 					name: values.name,
 					packageName: values.packageName,
 					account: values.account,
 					status: values.status,
+					hasAdmob,
+					hasApplovin,
+					hasFan,
+					hasUnity,
+					admobIds: values.admobIds,
+					fanIds: values.fanIds,
+					unityIds: values.unityIds,
+					applovinIds: values.applovinIds,
 				});
 				if (status === 200) {
 					router.replace("/apps");
@@ -88,6 +110,14 @@ const AppFrom = ({
 						packageName: values.packageName,
 						account: values.account,
 						status: values.status,
+						hasAdmob,
+						hasApplovin,
+						hasFan,
+						hasUnity,
+						admobIds: values.admobIds,
+						fanIds: values.fanIds,
+						unityIds: values.unityIds,
+						applovinIds: values.applovinIds,
 					},
 					id
 				);
@@ -142,7 +172,6 @@ const AppFrom = ({
 						name="account"
 						placeholder="Associated console"
 						value={formik.values.account}
-						defaultValue={consoles[0].name}
 						className="h-[50px] pl-3 bg-transparent rounded-lg outline-none border-[#9FA6B2] border focus:border-input-border active:border-input-border placeholder:text-[#9FA6B2]"
 					>
 						<option value="" disabled selected>
@@ -204,28 +233,36 @@ const AppFrom = ({
 					{hasAdmob && (
 						<div className="transition duration-700 ease-in-out">
 							<AdsIdField
-								onChange={formik.values.onChange}
+								formik={formik}
+								/* onChange={formik.handleChange}
 								value={formik.values.admobIds.bannerId}
-								inputFor="admob"
+								inputFor="bannerId" */
 								title="Banner Id"
+								name="admobIds.bannerId"
 							/>
 							<AdsIdField
-								onChange={formik.values.onChange}
+								formik={formik}
+								/* onChange={formik.handleChange}
 								value={formik.values.admobIds.interId}
-								inputFor="admob"
+								inputFor="interId" */
 								title="Inter Id"
+								name="admobIds.interId"
 							/>
 							<AdsIdField
-								onChange={formik.values.onChange}
+								formik={formik}
+								/* onChange={formik.handleChange}
 								value={formik.values.admobIds.rewardId}
-								inputFor="admob"
+								inputFor="rewardId" */
 								title="Reward Id"
+								name="admobIds.rewardId"
 							/>
 							<AdsIdField
-								onChange={formik.values.onChange}
+								formik={formik}
+								/* onChange={formik.handleChange}
 								value={formik.values.admobIds.nativeId}
-								inputFor="admob"
+								inputFor="nativeId" */
 								title="Native Id"
+								name="admobIds.nativeId"
 							/>
 						</div>
 					)}
@@ -245,28 +282,36 @@ const AppFrom = ({
 					{hasUnity && (
 						<div className="transition duration-700 ease-in-out">
 							<AdsIdField
-								onChange={formik.values.onChange}
+								formik={formik}
+								/* onChange={formik.handleChange}
 								value={formik.values.unityIds.bannerId}
-								inputFor="unity"
+								inputFor="bannerId" */
 								title="Banner Id"
+								name="unityIds.bannerId"
 							/>
 							<AdsIdField
-								onChange={formik.values.onChange}
+								formik={formik}
+								/* onChange={formik.handleChange}
 								value={formik.values.unityIds.interId}
-								inputFor="unity"
+								inputFor="interId" */
 								title="Inter Id"
+								name="unityIds.interId"
 							/>
 							<AdsIdField
-								onChange={formik.values.onChange}
+								formik={formik}
+								/* onChange={formik.handleChange}
 								value={formik.values.unityIds.rewardId}
-								inputFor="unity"
+								inputFor="rewardId" */
 								title="Reward Id"
+								name="unityIds.rewardId"
 							/>
 							<AdsIdField
-								onChange={formik.values.onChange}
+								formik={formik}
+								/* onChange={formik.handleChange}
 								value={formik.values.unityIds.nativeId}
-								inputFor="unity"
+								inputFor="nativeId" */
 								title="Native Id"
+								name="unityIds.nativeId"
 							/>
 						</div>
 					)}
@@ -286,28 +331,36 @@ const AppFrom = ({
 					{hasFan && (
 						<div className="transition duration-700 ease-in-out">
 							<AdsIdField
-								onChange={formik.values.onChange}
+								formik={formik}
+								/* onChange={formik.handleChange}
 								value={formik.values.fanIds.bannerId}
-								inputFor="fan"
+								inputFor="bannerId" */
 								title="Banner Id"
+								name="fanIds.bannerId"
 							/>
 							<AdsIdField
-								onChange={formik.values.onChange}
+								formik={formik}
+								/* onChange={formik.handleChange}
 								value={formik.values.fanIds.interId}
-								inputFor="fan"
+								inputFor="interId" */
 								title="Inter Id"
+								name="fanIds.interId"
 							/>
 							<AdsIdField
-								onChange={formik.values.onChange}
+								formik={formik}
+								/* onChange={formik.handleChange}
 								value={formik.values.fanIds.rewardId}
-								inputFor="fan"
+								inputFor="rewardId" */
 								title="Reward Id"
+								name="fanIds.rewardId"
 							/>
 							<AdsIdField
-								onChange={formik.values.onChange}
+								formik={formik}
+								/* onChange={formik.handleChange}
 								value={formik.values.fanIds.nativeId}
-								inputFor="fan"
+								inputFor="nativeId" */
 								title="Native Id"
+								name="fanIds.nativeId"
 							/>
 						</div>
 					)}
@@ -330,28 +383,36 @@ const AppFrom = ({
 					{hasApplovin && (
 						<div className="transition duration-700 ease-in-out">
 							<AdsIdField
-								onChange={formik.values.onChange}
+								formik={formik}
+								/* onChange={formik.handleChange}
 								value={formik.values.applovinIds.bannerId}
-								inputFor="applovin"
+								inputFor="bannerId" */
 								title="Banner Id"
+								name="applovinIds.bannerId"
 							/>
 							<AdsIdField
-								onChange={formik.values.onChange}
+								formik={formik}
+								/* onChange={formik.handleChange}
 								value={formik.values.applovinIds.interId}
-								inputFor="applovin"
+								inputFor="interId" */
 								title="Inter Id"
+								name="applovinIds.interId"
 							/>
 							<AdsIdField
-								onChange={formik.values.onChange}
+								formik={formik}
+								/* onChange={formik.handleChange}
 								value={formik.values.applovinIds.rewardId}
-								inputFor="applovin"
+								inputFor="rewardId" */
 								title="Reward Id"
+								name="applovinIds.rewardId"
 							/>
 							<AdsIdField
-								onChange={formik.values.onChange}
+								formik={formik}
+								/* onChange={formik.handleChange}
 								value={formik.values.applovinIds.nativeId}
-								inputFor="applovin"
+								inputFor="nativeId" */
 								title="Native Id"
+								name="applovinIds.nativeId"
 							/>
 						</div>
 					)}
