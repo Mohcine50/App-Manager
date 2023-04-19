@@ -50,6 +50,10 @@ const SideBar = ({ session }: { session: Session }) => {
 					<FontAwesomeIcon icon={faLaptop} style={{ fontSize: 18 }} />
 					<span>Apps</span>
 				</NavLink>
+				<NavLink href="/data">
+					<FontAwesomeIcon icon={faUser} style={{ fontSize: 18 }} />
+					<span>Data</span>
+				</NavLink>
 				<NavLink href="/profile">
 					<FontAwesomeIcon icon={faUser} style={{ fontSize: 18 }} />
 					<span>Profile</span>

@@ -52,7 +52,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
 				interId: admobIds.interId,
 				nativeId: admobIds.nativeId,
 				rewardId: admobIds.rewardId,
-				appId: packageName,
 			},
 		});
 		const fan = await prisma.fan.create({
