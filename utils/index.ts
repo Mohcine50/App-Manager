@@ -113,3 +113,15 @@ export const deleteConsole = async (id: string) => {
 	const data = await res.json();
 	return data;
 };
+
+/**
+Get Data 
+ */
+
+export const getData = async () => {
+	const res = await fetch(`${BASE_URL}/api/data`, {
+		cache: "no-cache",
+	});
+	const data = await res.json();
+	return data.data;
+};
