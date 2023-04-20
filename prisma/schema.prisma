@@ -57,6 +57,8 @@ model App {
   userId      String
   ads         Ads      @relation(fields: [adsId], references: [id])
   adsId       String   @unique
+  Data        Data?    @relation(fields: [dataId], references: [id])
+  dataId      String?  @unique
 }
 
 model Ads {
@@ -112,6 +114,21 @@ model Unity {
   bannerId String? @unique
   nativeId String? @unique
   Ads      Ads?
+}
+
+model Data {
+  id      String    @id @unique @default(uuid())
+  subData SubData[]
+  App     App?
+}
+
+model SubData {
+  id          String  @id @unique @default(uuid())
+  title       String?
+  image       String?
+  description String
+  Data        Data?   @relation(fields: [dataId], references: [id])
+  dataId      String?
 }
 
 ////////////////////////////////////////////

@@ -7,6 +7,7 @@ import {
 	faUser,
 	faToolbox,
 	faRightFromBracket,
+	faDatabase,
 } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import React from "react";
@@ -51,7 +52,10 @@ const SideBar = ({ session }: { session: Session }) => {
 					<span>Apps</span>
 				</NavLink>
 				<NavLink href="/data">
-					<FontAwesomeIcon icon={faUser} style={{ fontSize: 18 }} />
+					<FontAwesomeIcon
+						icon={faDatabase}
+						style={{ fontSize: 18 }}
+					/>
 					<span>Data</span>
 				</NavLink>
 				<NavLink href="/profile">

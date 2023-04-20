@@ -41,7 +41,6 @@ const LoginForm = () => {
 		},
 		validationSchema: loginFormSchema,
 	});
-	console.log(formik);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
