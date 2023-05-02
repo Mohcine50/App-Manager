@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { redirect } from "next/navigation";
+import React, { FormEventHandler, useEffect, useState } from "react";
+import { addData } from "../../../utils";
 import SubDataForm from "./subDataForm";
 
 interface IDataForm {
@@ -12,23 +14,32 @@ export interface dataItem {
 }
 const DataForm = ({ actionType }: IDataForm) => {
 	const [subDataCount, setSubDataCount] = useState<number>(0);
+	const [title, setTitle] = useState<string>("");
 	const [dataItems, setDataItems] = useState<dataItem[]>([]);
 
 	useEffect(() => {
 		console.log(dataItems);
 	}, [dataItems]);
 
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		const response = await addData({ title, subData: dataItems });
+		if (response === 200) redirect("/data");
+	};
 	return (
-		<form className="flex flex-col gap-3 px-2">
+		<form
+			className="flex flex-col gap-3 px-2"
+			onSubmit={(e) => handleSubmit(e)}
+		>
 			<div className="flex flex-col flex-grow gap-2">
 				<label htmlFor="title" className="px-2">
 					Title
 				</label>
 				<input
-					/* onChange={formik.handleChange} */
+					onChange={(e) => setTitle(e.target.value)}
 					type="text"
 					id="title"
-					/* value={formik.values.name} */
+					value={title}
 					placeholder="Data Title"
 					className="h-8 px-4 py-6 rounded-lg outline-none border-[#9FA6B2] border focus:border-input-border active:border-input-border placeholder:text-[#9FA6B2]"
 				/>

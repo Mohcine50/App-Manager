@@ -1,3 +1,4 @@
+import { SubData } from "@prisma/client";
 import { IAppBody } from "../types/types";
 
 const BASE_URL = process.env.NEXTAUTH_URL;
@@ -124,4 +125,22 @@ export const getData = async () => {
 	});
 	const data = await res.json();
 	return data.data;
+};
+
+export interface ISubData {
+	title: string;
+	image?: string | null;
+	description: string;
+}
+interface IDataBody {
+	title: string;
+	subData: ISubData[];
+}
+export const addData = async (body: IDataBody) => {
+	const res = await fetch("/api/data/", {
+		method: "POST",
+
+		body: JSON.stringify(body),
+	});
+	return res.status;
 };

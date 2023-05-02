@@ -68,7 +68,6 @@ const AppFrom = ({
 	const [hasUnity, setHasUnity] = useState<boolean>(Unity);
 	const [hasFan, setHasFan] = useState<boolean>(Fan);
 
-	console.log(unityIds);
 	const formik: any = useFormik({
 		initialValues: {
 			name: name,
