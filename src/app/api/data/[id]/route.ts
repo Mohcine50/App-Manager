@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../../utils/prismaClient";
 
 export async function GET(request: NextRequest, { params }: { params: any }) {
