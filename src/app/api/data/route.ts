@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
 
 		const data_ = await prisma.data.create({
 			data: {
-				title,
+				title: title,
 			},
 		});
 
