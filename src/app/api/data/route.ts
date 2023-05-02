@@ -1,7 +1,5 @@
-import { PrismaClient } from "@prisma/client";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
-import { ISubData } from "../../../../utils";
 import { prisma } from "../../../../utils/prismaClient";
 
 export async function GET(req: Request) {
