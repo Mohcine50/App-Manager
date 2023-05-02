@@ -12,11 +12,6 @@ export async function GET(req: Request) {
 	return NextResponse.json({ consoles: data });
 }
 
-export const config = {
-	api: {
-		bodyParser: true,
-	},
-};
 export async function POST(req: NextRequest, res: NextApiResponse) {
 	try {
 		const jsonReq = await req.json();
