@@ -6,21 +6,25 @@ const SubDataForm = ({
 	setDataItems,
 	index,
 	dataItems,
+	title = "",
+	description = "",
 }: {
 	setDataItems: any;
 	index: number;
 	dataItems: dataItem[];
+	description?: string;
+	title?: string;
 }) => {
-	const [title, setTitle] = useState<string>("");
-	const [description, setDescription] = useState<string>("");
+	const [title_, setTitle] = useState<string>(title);
+	const [description_, setDescription] = useState<string>(description);
 	useEffect(() => {
 		const updateArray = (index: number, value: dataItem) => {
 			const newArray = [...dataItems];
 			newArray[index] = value;
 			setDataItems(newArray);
 		};
-		if (title !== "" && description !== "")
-			updateArray(index, { title: title, description: description });
+		if (title_ !== "" && description_ !== "")
+			updateArray(index, { title: title_, description: description_ });
 	}, [description, setDataItems]);
 
 	return (
@@ -33,7 +37,7 @@ const SubDataForm = ({
 					onChange={(e) => setTitle(e.target.value)}
 					type="text"
 					id="title"
-					value={title}
+					value={title_}
 					placeholder="Data Title"
 					className="h-8 px-4 py-6 rounded-lg outline-none border-[#9FA6B2] border focus:border-input-border active:border-input-border placeholder:text-[#9FA6B2]"
 				/>
@@ -45,7 +49,7 @@ const SubDataForm = ({
 				<textarea
 					onChange={(e) => setDescription(e.target.value)}
 					id="description"
-					value={description}
+					value={description_}
 					placeholder="Data Title"
 					className="py-3 px-3 rounded-lg outline-none border-[#9FA6B2] border focus:border-input-border active:border-input-border placeholder:text-[#9FA6B2]"
 				/>

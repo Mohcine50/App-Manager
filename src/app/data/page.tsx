@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { getData } from "../../../utils";
+import { getData, getDatas } from "../../../utils";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import DataTable from "./dataTable";
 
@@ -18,7 +18,7 @@ export default async function DataPage() {
 		redirect("/login");
 	}
 
-	const data = await getData();
+	const data = await getDatas();
 
 	return (
 		<main className="p-5">

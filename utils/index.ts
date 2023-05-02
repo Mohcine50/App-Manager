@@ -119,7 +119,7 @@ export const deleteConsole = async (id: string) => {
 Get Data 
  */
 
-export const getData = async () => {
+export const getDatas = async () => {
 	const res = await fetch(`${BASE_URL}/api/data`, {
 		cache: "no-cache",
 	});
@@ -143,4 +143,20 @@ export const addData = async (body: IDataBody) => {
 		body: JSON.stringify(body),
 	});
 	return res.status;
+};
+
+export const deleteData = async (id: string) => {
+	const res = await fetch(`/api/data/${id}`, {
+		method: "DELETE",
+	});
+	const data = await res.json();
+	return data;
+};
+
+export const getData = async (id: string) => {
+	const res = await fetch(`${BASE_URL}/api/data/${id}`, {
+		cache: "no-cache",
+	});
+	const data = await res.json();
+	return data.data;
 };

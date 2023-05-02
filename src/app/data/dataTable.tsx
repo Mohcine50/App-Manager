@@ -5,7 +5,7 @@ import React from "react";
 import { STATUS } from "../../../types/types.d";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 import type { Data, SubData, App } from "@prisma/client";
-import { deleteApp } from "../../../utils";
+import { deleteApp, deleteData } from "../../../utils";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -20,8 +20,8 @@ const DataTable = ({ datas }: IProps) => {
 	const tHead: string[] = ["Title", "N° Apps", "Created At", "Action"];
 
 	const router = useRouter();
-	const delete_app = async (id: string) => {
-		const delete_ = await deleteApp(id);
+	const delete_data = async (id: string) => {
+		const delete_ = await deleteData(id);
 		router.refresh();
 	};
 	return (
@@ -81,7 +81,7 @@ const DataTable = ({ datas }: IProps) => {
 										<button
 											className="flex items-center gap-1 px-2 py-1 text-white bg-red-600 rounded-md outline-none h-9"
 											onClick={() => {
-												delete_app(data.id);
+												delete_data(data.id);
 											}}
 										>
 											<FontAwesomeIcon icon={faTrash} />
