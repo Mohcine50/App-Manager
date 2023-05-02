@@ -49,7 +49,7 @@ export default async function DataPage() {
 				</Link>
 			</div>
 			<div className="p-5 mt-5 bg-white rounded-lg">
-				<DataTable data={data} />
+				<DataTable datas={data} />
 			</div>
 		</main>
 	);

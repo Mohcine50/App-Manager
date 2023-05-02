@@ -4,18 +4,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { STATUS } from "../../../types/types.d";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
-import type { Data, SubData } from "@prisma/client";
+import type { Data, SubData, App } from "@prisma/client";
 import { deleteApp } from "../../../utils";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 interface IProps {
-	data: IData[];
+	datas: IData[];
 }
 interface IData extends Data {
-	SubData: SubData[];
+	subData: SubData[];
+	App: App[];
 }
-const DataTable = ({ data }: IProps) => {
+const DataTable = ({ datas }: IProps) => {
 	const tHead: string[] = ["Title", "N° Apps", "Created At", "Action"];
 
 	const router = useRouter();
@@ -39,7 +40,7 @@ const DataTable = ({ data }: IProps) => {
 					})}
 				</tr>
 			</thead>
-			{data.length === 0 ? (
+			{datas.length === 0 ? (
 				<tbody>
 					<tr>
 						<td
@@ -52,7 +53,7 @@ const DataTable = ({ data }: IProps) => {
 				</tbody>
 			) : (
 				<tbody>
-					{data.map((data: IData, idx) => {
+					{datas.map((data: IData, idx) => {
 						return (
 							<tr
 								key={idx}
@@ -62,10 +63,7 @@ const DataTable = ({ data }: IProps) => {
 									<span>{data.title}</span>
 								</td>
 								<td className="text-center">
-									<span>{data.SubData.length}</span>
-								</td>
-								<td className="text-center">
-									<span>{data.SubData.length}</span>
+									<span>{data.App.length}</span>
 								</td>
 								<td className="text-center">
 									<span>{`${data.createdAt}`}</span>
