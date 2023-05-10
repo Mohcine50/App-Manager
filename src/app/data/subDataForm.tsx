@@ -12,6 +12,7 @@ const SubDataForm = ({
 	description = "",
 	hideForm,
 	action,
+	show,
 }: {
 	setDataItems: any;
 	index: number;
@@ -20,6 +21,7 @@ const SubDataForm = ({
 	title?: string;
 	hideForm?: any;
 	action: "ADD" | "EDIT";
+	show?: boolean;
 }) => {
 	const [title_, setTitle] = useState<string>(title);
 	const [description_, setDescription] = useState<string>(description);
@@ -117,18 +119,18 @@ const SubDataForm = ({
 					) : null}
 				</div>
 			</div>
-			<button
-				type="button"
-				onClick={handleSubmit}
-				disabled={action === "EDIT" && edit === false}
-				className={`block w-full px-4 py-3 mr-3 font-normal text-white rounded-md my-7 ${
-					action === "EDIT" && edit === false
-						? "bg-blue-400"
-						: "bg-indigo"
-				}`}
-			>
-				{action === "ADD" ? "Add" : "Edit "}
-			</button>
+			{edit || show ? (
+				<button
+					type="button"
+					onClick={handleSubmit}
+					disabled={action === "EDIT" && !edit}
+					className={`block w-full px-4 py-3 mr-3 font-normal text-white rounded-md my-7 ${
+						action === "EDIT" && !edit ? "bg-blue-400" : "bg-indigo"
+					}`}
+				>
+					{action === "ADD" ? "Add" : "Edit "}
+				</button>
+			) : null}
 		</form>
 	);
 };

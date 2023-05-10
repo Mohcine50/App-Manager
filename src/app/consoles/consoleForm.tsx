@@ -26,7 +26,7 @@ const ConsoleForm = ({
 }: IProps) => {
 	const router = useRouter();
 	const { id } = useParams();
-	console.log(id);
+
 	const formik = useFormik({
 		initialValues: {
 			name: name,

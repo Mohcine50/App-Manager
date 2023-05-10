@@ -58,3 +58,51 @@ export async function DELETE(
 		status: 202,
 	});
 }
+
+export async function PUT(req: NextRequest, { params }: { params: any }) {
+	const { id } = params;
+	const jsonReq = await req.json();
+
+	const { title, subData } = jsonReq;
+	try {
+		const data = await prisma.data.update({
+			where: {
+				id,
+			},
+			data: {
+				title,
+			},
+		});
+
+		subData.forEach(async (d: any) => {
+			if (d.id) {
+				const subdataFound = await prisma.subData.findUnique({
+					where: { id: d.id },
+				});
+				await prisma.subData.update({
+					where: { id: d.id },
+					data: {
+						title: d.title,
+						description: d.description,
+					},
+				});
+			} else if (!d.if) {
+				await prisma.subData.create({
+					data: {
+						title: d.title,
+						description: d.description,
+						dataId: id,
+					},
+				});
+			}
+		});
+
+		return new Response(JSON.stringify({ message: "update Success" }), {
+			status: 200,
+		});
+	} catch (error) {
+		return new Response(JSON.stringify({ error }), {
+			status: 400,
+		});
+	}
+}

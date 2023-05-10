@@ -1,7 +1,7 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { FormEventHandler, useEffect, useState } from "react";
-import { addData } from "../../../utils";
+import { addData, editData } from "../../../utils";
 import SubDataForm from "./subDataForm";
 
 interface IDataForm {
@@ -10,6 +10,7 @@ interface IDataForm {
 	subData?: dataItem[];
 }
 export interface dataItem {
+	id?: string;
 	title: string;
 	description: string;
 }
@@ -18,10 +19,24 @@ const DataForm = ({ actionType, title = "", subData = [] }: IDataForm) => {
 	const [title_, setTitle] = useState<string>(title);
 	const [dataItems, setDataItems] = useState<dataItem[]>(subData);
 	const [showSubDataForm, setShowSubDataForm] = useState<boolean>(false);
+	const { id } = useParams();
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		const response = await addData({ title: title_, subData: dataItems });
+		let response;
+		if (actionType === "ADD") {
+			response = await addData({
+				title: title_,
+				subData: dataItems,
+			});
+		} else if (actionType === "EDIT") {
+			console.log(dataItems);
+			response = await editData(
+				{ title: title_, subData: dataItems },
+				id
+			);
+		}
+
 		if (response === 200) {
 			router.replace("/data");
 		}
@@ -72,6 +87,7 @@ const DataForm = ({ actionType, title = "", subData = [] }: IDataForm) => {
 						index={dataItems.length + 1}
 						hideForm={setShowSubDataForm}
 						action="ADD"
+						show={showSubDataForm}
 					/>
 				) : null}
 			</div>

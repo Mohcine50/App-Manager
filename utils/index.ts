@@ -127,10 +127,13 @@ export const getDatas = async () => {
 	return data.data;
 };
 
+// !Handle Data API calls
+
 export interface ISubData {
 	title: string;
 	image?: string | null;
 	description: string;
+	id?: string;
 }
 interface IDataBody {
 	title: string;
@@ -159,4 +162,12 @@ export const getData = async (id: string) => {
 	});
 	const data = await res.json();
 	return data.data;
+};
+
+export const editData = async (body: IDataBody, id: string) => {
+	const res = await fetch(`/api/data/${id}`, {
+		method: "PUT",
+		body: JSON.stringify(body),
+	});
+	return res.status;
 };
