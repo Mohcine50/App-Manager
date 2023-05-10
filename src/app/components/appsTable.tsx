@@ -67,7 +67,11 @@ const AppsTable = ({ apps }: IProps) => {
 								className="h-12 border-b border-gray-200"
 							>
 								<td className="text-center">
-									<span>{app.name}</span>
+									<span className="cursor-pointer hover:text-indigo">
+										<Link href={`/apps/${app.id}`}>
+											{app.name}
+										</Link>
+									</span>
 								</td>
 								<td className="text-center">
 									<span>{app.packageName}</span>

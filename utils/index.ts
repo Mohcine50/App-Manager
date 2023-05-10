@@ -32,6 +32,13 @@ export const getApp = async (id: string) => {
 	const data = await res.json();
 	return data;
 };
+export const getAppClient = async (id: string) => {
+	const res = await fetch(`/api/apps/${id}`, {
+		cache: "no-cache",
+	});
+	const data = await res.json();
+	return data;
+};
 /**
  * Delete App
  * @param id id of app
