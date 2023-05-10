@@ -1,5 +1,4 @@
 "use client";
-
 import { useRouter } from "next/navigation";
 import React, { FormEventHandler, useEffect, useState } from "react";
 import { addData } from "../../../utils";
@@ -15,19 +14,17 @@ export interface dataItem {
 	description: string;
 }
 const DataForm = ({ actionType, title = "", subData = [] }: IDataForm) => {
-	const [subDataCount, setSubDataCount] = useState<number>(
-		actionType === "ADD" ? 0 : subData.length
-	);
-	const [title_, setTitle] = useState<string>(title);
-	const [dataItems, setDataItems] = useState<dataItem[]>(
-		Array(subDataCount).fill([...subData])
-	);
 	const router = useRouter();
+	const [title_, setTitle] = useState<string>(title);
+	const [dataItems, setDataItems] = useState<dataItem[]>(subData);
+	const [showSubDataForm, setShowSubDataForm] = useState<boolean>(false);
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		const response = await addData({ title: title_, subData: dataItems });
-		if (response === 200) router.replace("/data");
+		if (response === 200) {
+			router.replace("/data");
+		}
 	};
 	return (
 		<form
@@ -50,7 +47,7 @@ const DataForm = ({ actionType, title = "", subData = [] }: IDataForm) => {
 			<hr />
 			<h2 className="text-base font-medium">Data Items</h2>
 			<div className="flex flex-col gap-4">
-				{dataItems.map((subdata, idx) => {
+				{dataItems.map((dataItem, idx) => {
 					return (
 						<>
 							<h1 className="text-base font-medium">
@@ -61,17 +58,28 @@ const DataForm = ({ actionType, title = "", subData = [] }: IDataForm) => {
 								index={idx}
 								setDataItems={setDataItems}
 								dataItems={dataItems}
-								title={subdata.title}
-								description={subdata.description}
+								title={dataItem.title}
+								description={dataItem.description}
+								action="EDIT"
 							/>
 						</>
 					);
 				})}
+				{showSubDataForm ? (
+					<SubDataForm
+						setDataItems={setDataItems}
+						dataItems={dataItems}
+						index={dataItems.length + 1}
+						hideForm={setShowSubDataForm}
+						action="ADD"
+					/>
+				) : null}
 			</div>
+
 			<button
 				onClick={(e) => {
 					e.preventDefault();
-					setSubDataCount((value) => value + 1);
+					setShowSubDataForm(true);
 				}}
 				className="py-2 rounded-lg outline-none border-[#9FA6B2] border hover:border-input-border hover:text-indigo placeholder:text-[#9FA6B2]"
 			>
