@@ -1,6 +1,8 @@
 "use client";
 import { Data } from "@prisma/client";
-import React, { ReactElement, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import React, { ReactElement, use, useCallback, useState } from "react";
+import { updateData } from "../../../utils";
 import Detail from "./detail";
 
 function AddData({
@@ -12,7 +14,21 @@ function AddData({
 }): React.ReactElement {
 	const [toggleData, setToggleData] = useState<boolean>(true);
 	const [selectedData, setSelectedData] = useState<string>("");
-	console.log(selectedData);
+	const path = usePathname();
+	const router = useRouter();
+	const id: string = path.split("/")[2];
+
+	const addData = async () => {
+		if (selectedData != "") {
+			console.log(selectedData);
+			const status = await updateData(id, selectedData);
+			if (status == 200) {
+				setToggleData(!toggleData);
+				router.refresh();
+			} else console.log("Can't add data");
+		}
+	};
+
 	return (
 		<div className="flex justify-between align-top">
 			{toggleData ? (
@@ -53,7 +69,7 @@ function AddData({
 					<button
 						className="flex items-center gap-1 px-2 py-1 text-white rounded-md outline-none bg-indigo h-9"
 						onClick={() => {
-							setToggleData(!toggleData);
+							addData();
 						}}
 					>
 						Save

@@ -68,6 +68,14 @@ export const editApp = async (body: IAppBody, id: string) => {
 	return res.status;
 };
 
+export const updateData = async (id: string, dataId: string) => {
+	const res = await fetch(`/api/apps/${id}/add-data`, {
+		method: "PUT",
+		body: JSON.stringify({ dataId }),
+	});
+	return res.status;
+};
+
 interface IConsoleBody {
 	name: string;
 	email: string;

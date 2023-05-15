@@ -18,6 +18,7 @@ export async function GET(request: NextRequest, { params }: { params: any }) {
 					fan: true,
 				},
 			},
+			Data: true,
 		},
 	});
 

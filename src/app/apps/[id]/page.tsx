@@ -21,7 +21,7 @@ export default async function editAppPage({
 					<Detail title="App Name" data={app.name} />
 					<Detail title="Console Name" data={app.Console.name} />
 					<Detail title="App Package Name" data={app.packageName} />
-					<AddData dataId={app.dataId} data={data} />
+					<AddData dataId={app.Data.title} data={data} />
 				</div>
 			</div>
 		</main>
