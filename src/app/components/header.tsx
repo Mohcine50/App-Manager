@@ -34,10 +34,10 @@ const Header = () => {
 					: title[1].charAt(0).toUpperCase() +
 					  title[1].substring(1)}{" "}
 				<span className="capitalize text-indigo">
-					{/* neeed to fix the condition one the second part*/}
+					{/* neeed to fix the condition one the second part **HALF FIXED*/}
 					{title[2] && name !== ""
 						? " > " + name
-						: " > " + title[2].replace("-", " ")}
+						: title[2] && " > " + title[2].replace("-", " ")}
 				</span>
 			</h1>
 		</div>

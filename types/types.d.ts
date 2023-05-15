@@ -1,3 +1,4 @@
+import { Data, SubData } from "@prisma/client";
 export interface Console {
 	id: number;
 	name: string;
@@ -22,7 +23,7 @@ export interface App {
 	status: STATUS;
 }
 
-interface IAppBody {
+export interface IAppBody {
 	name: string;
 	packageName: string;
 	account: string;
@@ -37,7 +38,7 @@ interface IAppBody {
 	hasFan: boolean;
 }
 
-interface IAdsIds {
+export interface IAdsIds {
 	bannerId?: string;
 	interId?: string;
 	rewardId?: string;
