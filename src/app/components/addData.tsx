@@ -4,6 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import React, { ReactElement, use, useCallback, useState } from "react";
 import { updateData } from "../../../utils";
 import Detail from "./detail";
+import { toast, ToastContainer } from "react-toastify";
 
 function AddData({
 	dataId,
@@ -25,58 +26,76 @@ function AddData({
 			if (status == 200) {
 				setToggleData(!toggleData);
 				router.refresh();
-			} else console.log("Can't add data");
+				toast.success(
+					dataId
+						? "Data Edited Successfully"
+						: "Data Added Successfully",
+					{
+						position: toast.POSITION.TOP_CENTER,
+					}
+				);
+			} else
+				toast.error(
+					dataId ? "Couldn't edited data" : "Couldn't Added data",
+					{
+						position: toast.POSITION.TOP_LEFT,
+					}
+				);
 		}
 	};
 
 	return (
-		<div className="flex justify-between align-top">
-			{toggleData ? (
-				<>
-					<Detail
-						title="App Data"
-						data={dataId || "No data Assigned"}
-					/>
-					<button
-						className="flex items-center gap-1 px-2 py-1 border-2 rounded-md outline-none text-indigo h-9"
-						onClick={() => {
-							setToggleData(!toggleData);
-						}}
-					>
-						Add Data
-					</button>
-				</>
-			) : (
-				<>
-					<select
-						name="data"
-						id="data"
-						onChange={(e) => {
-							setSelectedData(e.target.value);
-						}}
-					>
-						<option disabled selected>
-							Select Data
-						</option>
-						{data.map((dataElement: Data, index: number) => {
-							return (
-								<option key={index} value={dataElement.id}>
-									{dataElement.title}
-								</option>
-							);
-						})}
-					</select>
-					<button
-						className="flex items-center gap-1 px-2 py-1 text-white rounded-md outline-none bg-indigo h-9"
-						onClick={() => {
-							addData();
-						}}
-					>
-						Save
-					</button>
-				</>
-			)}
-		</div>
+		<>
+			<ToastContainer />
+			<div className="flex justify-between align-top">
+				{toggleData ? (
+					<>
+						<Detail
+							title="App Data"
+							data={dataId || "No data Assigned"}
+						/>
+						<button
+							className="flex items-center gap-1 px-2 py-1 border-2 rounded-md outline-none text-indigo h-9"
+							onClick={() => {
+								setToggleData(!toggleData);
+							}}
+						>
+							{dataId ? "Edit Data" : "Add Data"}
+						</button>
+					</>
+				) : (
+					<>
+						<select
+							name="data"
+							id="data"
+							className="h-[50px] pl-3 bg-transparent  rounded-lg outline-none border-[#9FA6B2] border focus:border-input-border active:border-input-border placeholder:text-[#9FA6B2]"
+							onChange={(e) => {
+								setSelectedData(e.target.value);
+							}}
+						>
+							<option disabled selected>
+								Select Data
+							</option>
+							{data.map((dataElement: Data, index: number) => {
+								return (
+									<option key={index} value={dataElement.id}>
+										{dataElement.title}
+									</option>
+								);
+							})}
+						</select>
+						<button
+							className="flex items-center gap-1 px-2 py-1 text-white rounded-md outline-none bg-indigo h-9"
+							onClick={() => {
+								addData();
+							}}
+						>
+							Save
+						</button>
+					</>
+				)}
+			</div>
+		</>
 	);
 }
 
