@@ -1,7 +1,7 @@
 "use client";
 import { Data } from "@prisma/client";
 import { usePathname, useRouter } from "next/navigation";
-import React, { ReactElement, use, useCallback, useState } from "react";
+import React, { useState } from "react";
 import { updateData } from "../../../utils";
 import Detail from "./detail";
 import { toast, ToastContainer } from "react-toastify";
