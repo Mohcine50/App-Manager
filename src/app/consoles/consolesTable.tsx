@@ -7,6 +7,7 @@ import type { App, Console } from "@prisma/client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { deleteConsole } from "../../../utils";
 import Link from "next/link";
+import moment from "moment";
 
 interface IProps {
 	consoles: IConsole[];
@@ -56,7 +57,11 @@ const ConsolesTable = ({ consoles }: IProps) => {
 								<span>{console.apps.length}</span>
 							</td>
 							<td className="text-center">
-								<span>{`${console.createdAt}`}</span>
+								<span>
+									{moment(console.createdAt).format(
+										"MMM Do YYYY"
+									)}
+								</span>
 							</td>
 							<td className="text-center">
 								<span>{console.country}</span>

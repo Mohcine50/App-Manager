@@ -18,11 +18,11 @@ export default async function ProfilePage() {
 			<div className="flex flex-col h-full gap-5 p-2 bg-white rounded-xl">
 				<Detail title="UserName" data={session?.user?.username} />
 				<Detail title="Password" data="**************" />
+				<Detail title="E-mail" data="shegami24@gmail.com" />
 				<Detail
 					title="API Key"
 					data="8d86df7d4a6198b7ab80c10cfd844202f8bb4c0540865804853e3d69330f9ae7"
 				/>
-				<Detail title="E-mail" data="shegami24@gmail.com" />
 			</div>
 		</main>
 	);

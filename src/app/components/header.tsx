@@ -25,7 +25,7 @@ const Header = () => {
 	return (
 		<div className="static flex items-center justify-between p-5 bg-white">
 			<h1
-				className={`text-lg font-medium ${
+				className={`text-lg font-semibold ${
 					title.length === 2 ? "text-indigo" : "text-gray-500"
 				} `}
 			>

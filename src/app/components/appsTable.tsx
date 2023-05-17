@@ -8,6 +8,7 @@ import type { App, Console } from "@prisma/client";
 import { deleteApp } from "../../../utils";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import moment from "moment";
 
 interface IProps {
 	apps: IApp[];
@@ -80,7 +81,11 @@ const AppsTable = ({ apps }: IProps) => {
 									<span>0</span>
 								</td>
 								<td className="text-center">
-									<span>{`${app.createdAt}`}</span>
+									<span>
+										{moment(app.createdAt).format(
+											"MMM Do YYYY"
+										)}
+									</span>
 								</td>
 								<td className="text-center">
 									<span>{app.Console.name}</span>

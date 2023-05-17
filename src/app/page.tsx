@@ -1,6 +1,8 @@
+import { App, Console, STATUS } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
+import { fetchApps, fetchConsoles } from "../../utils";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import Card from "./components/dashCard";
 import Chart from "./components/dashChart";
@@ -11,25 +13,33 @@ export default async function Home() {
 		redirect("/login");
 	}
 
+	let liveConsolesCount;
+	let deletedConsolesCount;
+	let liveAppsCount;
+	let deletedAppsCount;
+
+	const consoles = await fetchConsoles();
+	liveConsolesCount = consoles.filter(
+		(console: Console) => console.status === STATUS.Live
+	).length;
+	deletedConsolesCount = consoles.filter(
+		(console: Console) => console.status === STATUS.Deleted
+	).length;
+	const apps = await fetchApps();
+	liveAppsCount = apps.filter(
+		(app: App) => app.status === STATUS.Live
+	).length;
+	deletedAppsCount = apps.filter(
+		(app: App) => app.status === STATUS.Deleted
+	).length;
+
 	return (
 		<main className="p-6">
 			<div className="flex items-center justify-evenly ">
-				<Suspense fallback={<h1>Loading...</h1>}>
-					{/* @ts-expect-error Server Component */}
-					<Card title="Consoles" />
-				</Suspense>
-				<Suspense fallback={<h1>Loading...</h1>}>
-					{/* @ts-expect-error Server Component */}
-					<Card title="Apps" />
-				</Suspense>
-				<Suspense fallback={<h1>Loading...</h1>}>
-					{/* @ts-expect-error Server Component */}
-					<Card title="Users" />
-				</Suspense>
-				<Suspense fallback={<h1>Loading...</h1>}>
-					{/* @ts-expect-error Server Component */}
-					<Card title="Installs" />
-				</Suspense>
+				<Card title="Live Consoles" count={liveConsolesCount} />
+				<Card title="Deleted Consoles" count={deletedConsolesCount} />
+				<Card title="Live Apps" count={liveAppsCount} />
+				<Card title="Deleted Apps" count={deletedAppsCount} />
 			</div>
 			<div className="flex gap-2 m-6">
 				<Chart title="Downloads" />
