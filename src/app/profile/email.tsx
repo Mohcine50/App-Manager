@@ -2,47 +2,30 @@
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { changeUsername } from "../../../utils";
 import Detail from "../components/detail";
-import { toast, ToastContainer } from "react-toastify";
 
-const UserName = ({ data }: { data: string }) => {
-	const [editUsername, setEditUsername] = useState<boolean>(false);
-	const [username, setUserName] = useState<string>("");
+const Email = ({ data }: { data: string }) => {
+	const [editEmail, setEditEmail] = useState<boolean>(false);
+	const [email, setEmail] = useState<string>("");
 
-	const handleChangeUsername = async () => {
-		if (username !== "") {
-			const status = await changeUsername({ username });
-			if (status == 200) {
-				setEditUsername(false);
-				toast.success("Username change Successfully", {
-					position: toast.POSITION.TOP_CENTER,
-				});
-			} else {
-				toast.error("Username didn't change, try again!", {
-					position: toast.POSITION.TOP_LEFT,
-				});
-			}
-		}
-	};
+	const handleChangeEmail = async () => {};
 
 	return (
 		<>
-			<ToastContainer />
-			{editUsername === false ? (
+			{editEmail === false ? (
 				<div className="relative">
-					<Detail title="UserName" data={data} />
+					<Detail title="Email" data={data} />
 					<button
 						className="absolute block right-1 top-1"
 						type="button"
 						onClick={() => {
-							setEditUsername(!editUsername);
+							setEditEmail(!editEmail);
 						}}
 					>
 						<FontAwesomeIcon
 							icon={faEdit}
 							className={
-								editUsername ? "text-red-600" : "text-indigo"
+								editEmail ? "text-red-600" : "text-indigo"
 							}
 						/>
 					</button>
@@ -50,30 +33,30 @@ const UserName = ({ data }: { data: string }) => {
 			) : (
 				<>
 					<h2 className="px-3 text-lg font-semibold text-black">
-						UserName
+						Email
 					</h2>
 					<input
 						className="h-8 px-4 py-6 rounded-lg outline-none border-[#9FA6B2] border focus:border-input-border active:border-input-border placeholder:text-[#9FA6B2]"
 						type="text"
-						placeholder="Username"
-						name="username"
-						id="username"
-						value={username}
+						placeholder="Email"
+						name="email"
+						id="email"
+						value={email}
 						onChange={(e) => {
-							setUserName(e.target.value);
+							setEmail(e.target.value);
 						}}
 					/>
 					<div className="flex gap-1">
 						<button
 							className="py-2 text-white rounded-lg outline-none bg-indigo grow"
-							onClick={handleChangeUsername}
+							onClick={handleChangeEmail}
 						>
 							Save
 						</button>
 						<button
 							className="py-2 grow rounded-lg outline-none border-[#9FA6B2] border hover:border-input-border hover:text-indigo placeholder:text-[#9FA6B2]"
 							onClick={() => {
-								setEditUsername(false);
+								setEditEmail(false);
 							}}
 						>
 							Cancel
@@ -85,4 +68,4 @@ const UserName = ({ data }: { data: string }) => {
 	);
 };
 
-export default UserName;
+export default Email;

@@ -1,10 +1,10 @@
-import Detail from "../components/detail";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import Username from "./username";
 import Password from "./password";
 import ApiKey from "./apikey";
+import Email from "./email";
 
 export const metadata = {
 	title: "Apps Manager | Profile",
@@ -21,7 +21,7 @@ export default async function ProfilePage() {
 			<div className="flex flex-col h-full gap-5 p-2 bg-white rounded-xl">
 				<Username data={session?.user?.username} />
 				<Password data="**************" />
-				<Detail title="E-mail" data={session?.user?.email} />
+				<Email data={session?.user?.email} />
 				<ApiKey title="API Key" data={session?.user?.APIKey} />
 			</div>
 		</main>

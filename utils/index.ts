@@ -187,3 +187,35 @@ export const editData = async (body: IDataBody, id: string) => {
 	});
 	return res.status;
 };
+
+/* Handle username, email and password changes */
+
+export const changeUsername = async (body: { username: string }) => {
+	const res = await fetch("/api/user/change-username", {
+		method: "PUT",
+		body: JSON.stringify(body),
+	});
+
+	return res.status;
+};
+
+export const changeEmail = async (body: { email: string }) => {
+	const res = await fetch("/api/user/change-email", {
+		method: "PUT",
+		body: JSON.stringify(body),
+	});
+
+	return res.status;
+};
+
+export const changePassword = async (body: {
+	password: string;
+	currentPassword: string;
+}) => {
+	const res = await fetch("/api/user/change-username", {
+		method: "PUT",
+		body: JSON.stringify(body),
+	});
+
+	return res.status;
+};
