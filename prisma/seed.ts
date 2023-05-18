@@ -11,6 +11,8 @@ async function main() {
 		update: {},
 		create: {
 			username: "shegami24",
+			email: "shegami24@gmail.com",
+			APIKey: "jncdjnc838nejnjnc38d38duduejded38djie3iej",
 			password,
 		},
 	});

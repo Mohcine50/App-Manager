@@ -8,25 +8,26 @@ const BASE_URL = process.env.NEXTAUTH_URL;
  * @returns consoles
  */
 export const fetchConsoles = async () => {
-	const res = await fetch(`${BASE_URL}/api/console`, {
+	const res = await fetch(`${BASE_URL}api/console`, {
 		cache: "no-cache",
 	});
 	const data = await res.json();
 	return data.consoles;
 };
+
 /**
  *
  * @returns apps
  */
 export const fetchApps = async () => {
-	const res = await fetch(`${BASE_URL}/api/apps`, {
+	const res = await fetch(`${BASE_URL}api/apps`, {
 		cache: "no-cache",
 	});
 	const data = await res.json();
 	return data.apps;
 };
 export const getApp = async (id: string) => {
-	const res = await fetch(`${BASE_URL}/api/apps/${id}`, {
+	const res = await fetch(`${BASE_URL}api/apps/${id}`, {
 		cache: "no-cache",
 	});
 	const data = await res.json();
@@ -87,7 +88,7 @@ interface IConsoleBody {
 }
 
 export const getConsole = async (id: string) => {
-	const res = await fetch(`${BASE_URL}/api/console/${id}`, {
+	const res = await fetch(`${BASE_URL}api/console/${id}`, {
 		cache: "no-cache",
 	});
 	const data = await res.json();
@@ -135,7 +136,7 @@ Get Data
  */
 
 export const getDatas = async () => {
-	const res = await fetch(`${BASE_URL}/api/data`, {
+	const res = await fetch(`${BASE_URL}api/data`, {
 		cache: "no-cache",
 	});
 	const data = await res.json();
@@ -172,7 +173,7 @@ export const deleteData = async (id: string) => {
 };
 
 export const getData = async (id: string) => {
-	const res = await fetch(`${BASE_URL}/api/data/${id}`, {
+	const res = await fetch(`${BASE_URL}api/data/${id}`, {
 		cache: "no-cache",
 	});
 	const data = await res.json();

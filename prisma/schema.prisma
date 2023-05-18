@@ -14,6 +14,8 @@ model User {
   id           String        @id @unique @default(uuid())
   username     String        @unique
   password     String
+  email        String        @unique
+  APIKey       String        @unique
   consoles     Console[]
   apps         App[]
   phoneNumbers phoneNumber[]
@@ -21,19 +23,18 @@ model User {
 }
 
 model Console {
-  id            String   @id @unique @default(uuid())
-  name          String   @unique
-  email         String   @unique
+  id            String      @id @unique @default(uuid())
+  name          String      @unique
+  email         String      @unique
   password      String
   country       String
   userId        String
-  status        STATUS   @default(Live)
-  createdAt     DateTime @default(now())
-  phoneNumberId String   @unique
-
-  phoneNumber phoneNumber @relation(fields: [phoneNumberId], references: [id])
-  User        User        @relation(fields: [userId], references: [id])
-  apps        App[]
+  status        STATUS      @default(Live)
+  createdAt     DateTime    @default(now())
+  phoneNumberId String      @unique
+  phoneNumber   phoneNumber @relation(fields: [phoneNumberId], references: [id])
+  User          User        @relation(fields: [userId], references: [id])
+  apps          App[]
 }
 
 model phoneNumber {
@@ -59,6 +60,14 @@ model App {
   adsId       String   @unique
   Data        Data?    @relation(fields: [dataId], references: [id])
   dataId      String?  @unique
+  JsonUrl     JsonApp? @relation(fields: [jsonAppId], references: [id])
+  jsonAppId   String?  @unique
+}
+
+model JsonApp {
+  id  String @id @unique @default(uuid())
+  url String @unique
+  App App?
 }
 
 model Ads {

@@ -1,3 +1,4 @@
+import { User } from "@prisma/client";
 import { compare } from "bcrypt";
 import NextAuth, { Session, type NextAuthOptions } from "next-auth";
 import { JWT } from "next-auth/jwt";
@@ -24,7 +25,7 @@ export const authOptions: NextAuthOptions = {
 			async authorize(credentials, req) {
 				if (!credentials?.username || !credentials.password)
 					return null;
-				const user = await prisma.user.findUnique({
+				const user: User | null = await prisma.user.findUnique({
 					where: { username: credentials.username },
 				});
 				if (!user)
@@ -36,6 +37,8 @@ export const authOptions: NextAuthOptions = {
 				);
 				if (!checkPassword)
 					throw new Error(JSON.stringify({ type: "Password" }));
+
+				console.log(user);
 				return user;
 			},
 		}),

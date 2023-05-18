@@ -1,7 +1,6 @@
 import { App, Console, STATUS } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { Suspense } from "react";
 import { fetchApps, fetchConsoles } from "../../utils";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import Card from "./components/dashCard";
@@ -13,23 +12,18 @@ export default async function Home() {
 		redirect("/login");
 	}
 
-	let liveConsolesCount;
-	let deletedConsolesCount;
-	let liveAppsCount;
-	let deletedAppsCount;
-
 	const consoles = await fetchConsoles();
-	liveConsolesCount = consoles.filter(
+	const liveConsolesCount = consoles.filter(
 		(console: Console) => console.status === STATUS.Live
 	).length;
-	deletedConsolesCount = consoles.filter(
+	const deletedConsolesCount = consoles.filter(
 		(console: Console) => console.status === STATUS.Deleted
 	).length;
 	const apps = await fetchApps();
-	liveAppsCount = apps.filter(
+	const liveAppsCount = apps.filter(
 		(app: App) => app.status === STATUS.Live
 	).length;
-	deletedAppsCount = apps.filter(
+	const deletedAppsCount = apps.filter(
 		(app: App) => app.status === STATUS.Deleted
 	).length;
 
