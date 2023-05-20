@@ -1,15 +1,46 @@
 "use client";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import { changePassword } from "../../../utils";
 import Detail from "../components/detail";
 
 const Password = ({ data }: { data: string }) => {
 	const [editPassword, setEditPassword] = useState<boolean>(false);
 	const [password, setPassword] = useState<string>("");
 	const [oldPassword, setOldPassword] = useState<string>("");
+	const { data: session, update } = useSession();
+	const router = useRouter();
 
-	const handleChangePassword = async () => {};
+	const handleChangePassword = async () => {
+		if (password !== "" && oldPassword !== password) {
+			const [status, hashedPassword] = await changePassword({
+				password,
+				currentPassword: oldPassword,
+			});
+			if (status == 200) {
+				setEditPassword(false);
+				await update({
+					...session,
+					user: {
+						...session?.user,
+						password: hashedPassword,
+					},
+				});
+				router.refresh();
+				toast.success("Password change Successfully", {
+					position: toast.POSITION.TOP_CENTER,
+				});
+			} else {
+				toast.error("Password didn't change, try again!", {
+					position: toast.POSITION.TOP_LEFT,
+				});
+			}
+		}
+	};
 
 	return (
 		<>

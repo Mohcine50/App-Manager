@@ -1,17 +1,46 @@
 "use client";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import { changeEmail } from "../../../utils";
 import Detail from "../components/detail";
 
 const Email = ({ data }: { data: string }) => {
 	const [editEmail, setEditEmail] = useState<boolean>(false);
 	const [email, setEmail] = useState<string>("");
+	const { data: session, update } = useSession();
+	const router = useRouter();
 
-	const handleChangeEmail = async () => {};
+	const handleEmailChange = async () => {
+		if (email !== "") {
+			const status = await changeEmail({ email });
+			if (status == 200) {
+				setEditEmail(false);
+				await update({
+					...session,
+					user: {
+						...session?.user,
+						email,
+					},
+				});
+				router.refresh();
+				toast.success("Email change Successfully", {
+					position: toast.POSITION.TOP_CENTER,
+				});
+			} else {
+				toast.error("Email didn't change, try again!", {
+					position: toast.POSITION.TOP_LEFT,
+				});
+			}
+		}
+	};
 
 	return (
 		<>
+			<ToastContainer />
 			{editEmail === false ? (
 				<div className="relative">
 					<Detail title="Email" data={data} />
@@ -49,7 +78,7 @@ const Email = ({ data }: { data: string }) => {
 					<div className="flex gap-1">
 						<button
 							className="py-2 text-white rounded-lg outline-none bg-indigo grow"
-							onClick={handleChangeEmail}
+							onClick={handleEmailChange}
 						>
 							Save
 						</button>

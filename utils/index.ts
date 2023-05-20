@@ -216,6 +216,6 @@ export const changePassword = async (body: {
 		method: "PUT",
 		body: JSON.stringify(body),
 	});
-
-	return res.status;
+	const data = await res.json();
+	return [res.status, data.password];
 };

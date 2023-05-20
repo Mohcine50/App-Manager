@@ -4,25 +4,25 @@ import { prisma } from "../../../../../utils/prismaClient";
 import { authOptions } from "../../auth/[...nextauth]/route";
 
 export async function PUT(req: NextRequest) {
-	const session = await getServerSession(authOptions);
-	const jsonReq = await req.json();
-	const { username } = jsonReq;
-
 	try {
+		const session = await getServerSession(authOptions);
+		const jsonReq = await req.json();
+		const { username } = jsonReq;
+		const id = session?.user?.id;
 		const user = await prisma.user.findUnique({
 			where: {
-				username: session?.user?.username,
+				id,
 			},
 		});
 		if (!user) {
 			return new Response(JSON.stringify({ error: "User not found" }), {
 				status: 400,
 			});
-		}
+		} 
 
-		await prisma.user.update({
+		const updatedUser = await prisma.user.update({
 			where: {
-				id: user.id,
+				id,
 			},
 			data: {
 				username,

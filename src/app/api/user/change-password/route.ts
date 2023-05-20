@@ -42,7 +42,10 @@ export async function PUT(req: NextRequest) {
 		});
 
 		return new Response(
-			JSON.stringify({ message: "userName updated successfully" }),
+			JSON.stringify({
+				message: "userName updated successfully",
+				password: hashedPassword,
+			}),
 			{
 				status: 200,
 			}

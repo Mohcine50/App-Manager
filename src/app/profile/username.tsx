@@ -5,16 +5,28 @@ import { useState } from "react";
 import { changeUsername } from "../../../utils";
 import Detail from "../components/detail";
 import { toast, ToastContainer } from "react-toastify";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const UserName = ({ data }: { data: string }) => {
 	const [editUsername, setEditUsername] = useState<boolean>(false);
 	const [username, setUserName] = useState<string>("");
+	const { data: session, update } = useSession();
+	const router = useRouter();
 
 	const handleChangeUsername = async () => {
 		if (username !== "") {
 			const status = await changeUsername({ username });
 			if (status == 200) {
 				setEditUsername(false);
+				await update({
+					...session,
+					user: {
+						...session?.user,
+						username,
+					},
+				});
+				router.refresh();
 				toast.success("Username change Successfully", {
 					position: toast.POSITION.TOP_CENTER,
 				});

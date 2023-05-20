@@ -38,7 +38,6 @@ export const authOptions: NextAuthOptions = {
 				if (!checkPassword)
 					throw new Error(JSON.stringify({ type: "Password" }));
 
-				console.log(user);
 				return user;
 			},
 		}),
@@ -48,7 +47,11 @@ export const authOptions: NextAuthOptions = {
 			session.user = token;
 			return session;
 		},
-		async jwt({ token, user }) {
+		async jwt({ token, trigger, user, session }) {
+			if (trigger === "update" && session?.user) {
+				// Note, that `session` can be any arbitrary object, remember to validate it!
+				user = session.user;
+			}
 			return { ...token, ...user };
 		},
 	},

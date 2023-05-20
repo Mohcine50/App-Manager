@@ -21,7 +21,6 @@ function AddData({
 
 	const addData = async () => {
 		if (selectedData != "") {
-			console.log(selectedData);
 			const status = await updateData(id, selectedData);
 			if (status == 200) {
 				setToggleData(!toggleData);
@@ -84,14 +83,25 @@ function AddData({
 								);
 							})}
 						</select>
-						<button
-							className="flex items-center gap-1 px-2 py-1 text-white rounded-md outline-none bg-indigo h-9"
-							onClick={() => {
-								addData();
-							}}
-						>
-							Save
-						</button>
+						<div className="flex gap-1 align-middle">
+							<button
+								className="flex items-center gap-1 px-2 py-1 text-white rounded-md outline-none bg-red-500 h-9"
+								onClick={() => {
+									setToggleData(!toggleData);
+								}}
+							>
+								Cancel
+							</button>
+
+							<button
+								className="flex items-center gap-1 px-2 py-1 text-white rounded-md outline-none bg-indigo h-9"
+								onClick={() => {
+									addData();
+								}}
+							>
+								Save
+							</button>
+						</div>
 					</>
 				)}
 			</div>
