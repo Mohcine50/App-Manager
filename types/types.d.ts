@@ -39,8 +39,8 @@ export interface IAppBody {
 }
 
 export interface IAdsIds {
-	bannerId?: string;
-	interId?: string;
-	rewardId?: string;
-	nativeId?: string;
+	bannerId: string | null;
+	interId: string | null;
+	rewardId: string | null;
+	nativeId: string | null;
 }

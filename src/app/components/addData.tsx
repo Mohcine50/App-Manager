@@ -85,7 +85,7 @@ function AddData({
 						</select>
 						<div className="flex gap-1 align-middle">
 							<button
-								className="flex items-center gap-1 px-2 py-1 text-white rounded-md outline-none bg-red-500 h-9"
+								className="flex items-center gap-1 px-2 py-1 text-white bg-red-500 rounded-md outline-none h-9"
 								onClick={() => {
 									setToggleData(!toggleData);
 								}}
