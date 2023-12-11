@@ -22,10 +22,6 @@ export const fetchConsoles = async () => {
 export const fetchApps = async () => {
   const res = await fetch(`${BASE_URL}/api/apps`, {
     cache: "no-cache",
-    //TESt
-    next: {
-      revalidate: 10,
-    },
   });
   const data = await res.json();
   return data.apps;

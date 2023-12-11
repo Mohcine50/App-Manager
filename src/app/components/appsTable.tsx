@@ -33,6 +33,10 @@ const AppsTable = ({ apps }: IProps) => {
     router.refresh();
   };
 
+  useEffect(() => {
+    router.refresh();
+  }, [router]);
+
   return (
     <table className="table-auto w-[100%]">
       <thead>
